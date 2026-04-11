@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   QuickExplore: QuickExplore.html
-last_built: 2026-04-11T20:58Z
+last_built: 2026-04-11T21:00Z
 urls:
-  reference: https://ramsas88.github.io/data-explorer/reference
-  article: https://ramsas88.github.io/data-explorer/articles
+  reference: https://ramsas88.github.io/quickexplorer/reference
+  article: https://ramsas88.github.io/quickexplorer/articles

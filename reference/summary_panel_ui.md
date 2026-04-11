@@ -22,4 +22,4 @@ with the summary UI elements.
 
 ## See also
 
-[`summary_panel_server()`](https://ramsas88.github.io/data-explorer/reference/summary_panel_server.md)
+[`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md)

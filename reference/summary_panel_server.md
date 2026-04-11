@@ -27,4 +27,4 @@ summary_panel_server(id, loaded_data)
 
 ## See also
 
-[`summary_panel_ui()`](https://ramsas88.github.io/data-explorer/reference/summary_panel_ui.md)
+[`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md)

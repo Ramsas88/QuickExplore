@@ -23,4 +23,4 @@ with the viewer UI.
 
 ## See also
 
-[`data_viewer_server()`](https://ramsas88.github.io/data-explorer/reference/data_viewer_server.md)
+[`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md)

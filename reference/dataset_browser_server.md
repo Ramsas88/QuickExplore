@@ -34,4 +34,4 @@ pairs) and `selected_library` (the currently active library name).
 
 ## See also
 
-[`dataset_browser_ui()`](https://ramsas88.github.io/data-explorer/reference/dataset_browser_ui.md)
+[`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md)

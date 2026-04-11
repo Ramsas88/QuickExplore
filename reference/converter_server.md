@@ -33,4 +33,4 @@ converter_server(id, loaded_data, selected_dataset)
 
 ## See also
 
-[`converter_ui()`](https://ramsas88.github.io/data-explorer/reference/converter_ui.md)
+[`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md)

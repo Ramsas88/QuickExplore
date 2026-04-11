@@ -22,4 +22,4 @@ containing the sidebar UI elements.
 
 ## See also
 
-[`dataset_browser_server()`](https://ramsas88.github.io/data-explorer/reference/dataset_browser_server.md)
+[`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md)

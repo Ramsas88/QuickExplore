@@ -22,4 +22,4 @@ with the converter UI.
 
 ## See also
 
-[`converter_server()`](https://ramsas88.github.io/data-explorer/reference/converter_server.md)
+[`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md)

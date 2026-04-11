@@ -111,10 +111,10 @@ Available module pairs:
 
 | UI function                                                                                        | Server function                                                                                            | Purpose                        |
 |----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------|
-| [`dataset_browser_ui()`](https://ramsas88.github.io/data-explorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/data-explorer/reference/dataset_browser_server.md) | Library + dataset sidebar      |
-| [`data_viewer_ui()`](https://ramsas88.github.io/data-explorer/reference/data_viewer_ui.md)         | [`data_viewer_server()`](https://ramsas88.github.io/data-explorer/reference/data_viewer_server.md)         | Interactive table with filters |
-| [`summary_panel_ui()`](https://ramsas88.github.io/data-explorer/reference/summary_panel_ui.md)     | [`summary_panel_server()`](https://ramsas88.github.io/data-explorer/reference/summary_panel_server.md)     | Descriptive statistics         |
-| [`converter_ui()`](https://ramsas88.github.io/data-explorer/reference/converter_ui.md)             | [`converter_server()`](https://ramsas88.github.io/data-explorer/reference/converter_server.md)             | Multi-format export            |
+| [`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md) | Library + dataset sidebar      |
+| [`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md)         | [`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md)         | Interactive table with filters |
+| [`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md)     | [`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md)     | Descriptive statistics         |
+| [`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md)             | [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md)             | Multi-format export            |
 
 ## Session Info
 

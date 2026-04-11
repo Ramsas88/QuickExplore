@@ -35,4 +35,4 @@ containing the currently filtered `data.frame`.
 
 ## See also
 
-[`data_viewer_ui()`](https://ramsas88.github.io/data-explorer/reference/data_viewer_ui.md)
+[`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md)
