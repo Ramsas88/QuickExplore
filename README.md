@@ -17,10 +17,7 @@ pak::pak("Ramsas88/QuickExplore")
 
 ## Launching the Application
 
-``` r
-library(QuickExplore)
-run_app()
-```
+`r{eval = FALSE} library(QuickExplore) run_app()`
 
 The app opens in your default browser. If you are running inside RStudio
 it opens in the Viewer pane.
@@ -73,15 +70,9 @@ df <- data.frame(
 # Numeric summary
 library(QuickExplore)
 compute_numeric_summary(df, c("age", "dose"))
-#>   Variable N Missing  Mean Median    SD Min Max
-#> 1      age 5       1 36.80     34 11.43  25  52
-#> 2     dose 6       0 16.67     15  8.16  10  30
 
 # Categorical summary
 compute_categorical_summary(df, "sex")
-#>   sex Frequency Percentage Variable
-#> 1   F         3         50      sex
-#> 2   M         3         50      sex
 ```
 
 ### Grouped Summaries

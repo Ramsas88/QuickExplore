@@ -27,7 +27,7 @@ pak::pak("Ramsas88/QuickExplore")
 
 ## Launching the Application
 
-```r
+```r{eval = FALSE}
 library(QuickExplore)
 run_app()
 ```
@@ -72,7 +72,7 @@ head(info)
 
 ### Descriptive Statistics
 
-```{r example-stats}
+```{r example-stats, eval=FALSE}
 df <- data.frame(
   age  = c(25, 34, 45, 52, 28, NA),
   sex  = c("M", "F", "M", "F", "M", "F"),
