@@ -9,6 +9,12 @@ filter, summarise, and export datasets without writing any code.
 The package also exposes a set of standalone R functions for use in
 scripts or other Shiny applications.
 
+## install package from GitHub
+
+``` r
+pak::pak("Ramsas88/dataexplorer")
+```
+
 ## Launching the Application
 
 ``` r
