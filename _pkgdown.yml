@@ -1,4 +1,76 @@
-url: ~
+url: https://ramsas88.github.io/data-explorer/
+
 template:
   bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#0d47a1"
 
+home:
+  title: "dataexplorer — Interactive Dataset Explorer"
+  description: >
+    A Shiny application providing a SAS Studio-style interface for browsing,
+    exploring, summarising, and converting datasets in SAS, CSV, and R formats.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/ramsas88/data-explorer
+      aria-label: GitHub
+
+reference:
+  - title: "Launch App"
+    desc: "Start the interactive Shiny application."
+    contents:
+      - run_app
+
+  - title: "Dataset I/O"
+    desc: "Read datasets and list files in a directory."
+    contents:
+      - read_dataset
+      - list_datasets
+
+  - title: "Dataset Metadata"
+    desc: "Inspect dataset and variable-level metadata."
+    contents:
+      - get_dataset_metadata
+      - get_variable_info
+      - format_file_size
+
+  - title: "Summary Statistics"
+    desc: "Compute descriptive statistics for numeric and categorical variables."
+    contents:
+      - compute_numeric_summary
+      - compute_categorical_summary
+
+  - title: "Shiny Modules"
+    desc: "Reusable Shiny module UI and server functions."
+    contents:
+      - dataset_browser_ui
+      - dataset_browser_server
+      - data_viewer_ui
+      - data_viewer_server
+      - summary_panel_ui
+      - summary_panel_server
+      - converter_ui
+      - converter_server
+
+  - title: "Package"
+    desc: "Package-level documentation."
+    contents:
+      - dataexplorer-package
+
+articles:
+  - title: "Get Started"
+    navbar: ~
+    contents:
+      - dataexplorer
+
+news:
+  releases:
+    - text: "Version 0.1.0"
+      href: https://github.com/ramsas88/data-explorer/releases/tag/v0.1.0

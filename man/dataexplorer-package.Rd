@@ -24,8 +24,8 @@ descriptive statistics.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ramsas88/data-explorer}
-  \item Report bugs at \url{https://github.com/ramsas88/data-explorer/issues}
+  \item \url{https://github.com/ramsas88/dataexplorer}
+  \item Report bugs at \url{https://github.com/ramsas88/dataexplorer/issues}
 }
 
 }
