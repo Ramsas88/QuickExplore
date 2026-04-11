@@ -1,4 +1,4 @@
 library(testthat)
-library(dataexplorer)
+library(QuickExplore)
 
-test_check("dataexplorer")
+test_check("QuickExplore")

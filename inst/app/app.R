@@ -1,12 +1,12 @@
-# dataexplorer – embedded Shiny application
-# This file is run by shiny::runApp() via dataexplorer::run_app().
-# All helper functions are provided by the dataexplorer package, which is
+# QuickExplore – embedded Shiny application
+# This file is run by shiny::runApp() via QuickExplore::run_app().
+# All helper functions are provided by the QuickExplore package, which is
 # guaranteed to be on the search path when run_app() is called.
 
 library(shiny)
 library(bslib)
 library(DT)
-library(dataexplorer)
+library(QuickExplore)
 
 # ── UI ─────────────────────────────────────────────────────────────────────────
 
@@ -27,7 +27,7 @@ ui <- bslib::page_fluid(
   div(
     class = "app-header",
     div(
-      h4(icon("chart-bar"), " Data Explorer"),
+      h4(icon("chart-bar"), " Quick Explorer"),
       span(class = "header-subtitle", "R Shiny | Dataset Browser & Analysis")
     ),
     div(

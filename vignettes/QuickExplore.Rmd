@@ -1,8 +1,8 @@
 ---
-title: "Getting Started with dataexplorer"
+title: "Getting Started with QuickExplore"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with dataexplorer}
+  %\VignetteIndexEntry{Getting Started with QuickExplore}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-**dataexplorer** provides a point-and-click Shiny interface modelled after SAS
+**QuickExplore** provides a point-and-click Shiny interface modelled after SAS
 Studio's library/dataset browser.  It supports SAS (`.sas7bdat`, `.xpt`), CSV,
 and R (`.rds`) files and lets you explore, filter, summarise, and export
 datasets without writing any code.
@@ -27,7 +27,7 @@ other Shiny applications.
 ## Launching the Application
 
 ```r
-library(dataexplorer)
+library(QuickExplore)
 run_app()
 ```
 
@@ -79,7 +79,7 @@ df <- data.frame(
 )
 
 # Numeric summary
-library(dataexplorer)
+library(QuickExplore)
 compute_numeric_summary(df, c("age", "dose"))
 
 # Categorical summary
@@ -99,7 +99,7 @@ embed any of these modules in your own Shiny apps:
 
 ```r
 library(shiny)
-library(dataexplorer)
+library(QuickExplore)
 
 ui <- fluidPage(
   data_viewer_ui("viewer")

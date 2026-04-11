@@ -7,7 +7,7 @@ template:
     primary: "#0d47a1"
 
 home:
-  title: "dataexplorer — Interactive Dataset Explorer"
+  title: "QuickExplore — Interactive Dataset Explorer"
   description: >
     A Shiny application providing a SAS Studio-style interface for browsing,
     exploring, summarising, and converting datasets in SAS, CSV, and R formats.
@@ -62,13 +62,13 @@ reference:
   - title: "Package"
     desc: "Package-level documentation."
     contents:
-      - dataexplorer-package
+      - QuickExplore-package
 
 articles:
   - title: "Get Started"
     navbar: ~
     contents:
-      - dataexplorer
+      - QuickExplore
 
 news:
   releases:

@@ -1,4 +1,4 @@
-#' dataexplorer: Interactive Dataset Explorer for SAS and Other Data Formats
+#' QuickExplore: Interactive Dataset Explorer for SAS and Other Data Formats
 #'
 #' @description
 #' A 'Shiny' application that provides a SAS Studio-style interface for

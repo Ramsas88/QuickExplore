@@ -22,11 +22,11 @@
 #'
 #' @export
 run_app <- function(...) {
-  app_dir <- system.file("app", package = "dataexplorer")
+  app_dir <- system.file("app", package = "QuickExplore")
   if (!nzchar(app_dir)) {
     stop(
       "Could not find the app directory. ",
-      "Try re-installing dataexplorer with `install.packages('dataexplorer')`.",
+      "Try re-installing QuickExplore with `install.packages('QuickExplore')`.",
       call. = FALSE
     )
   }

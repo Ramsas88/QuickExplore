@@ -1,7 +1,7 @@
 
 ## Overview
 
-**dataexplorer** provides a point-and-click Shiny interface modelled
+**QuickExplore** provides a point-and-click Shiny interface modelled
 after SAS Studio’s library/dataset browser. It supports SAS
 (`.sas7bdat`, `.xpt`), CSV, and R (`.rds`) files and lets you explore,
 filter, summarise, and export datasets without writing any code.
@@ -12,13 +12,13 @@ scripts or other Shiny applications.
 ## install package from GitHub
 
 ``` r
-pak::pak("Ramsas88/dataexplorer")
+pak::pak("Ramsas88/QuickExplore")
 ```
 
 ## Launching the Application
 
 ``` r
-library(dataexplorer)
+library(QuickExplore)
 run_app()
 ```
 
@@ -71,7 +71,7 @@ df <- data.frame(
 )
 
 # Numeric summary
-library(dataexplorer)
+library(QuickExplore)
 compute_numeric_summary(df, c("age", "dose"))
 #>   Variable N Missing  Mean Median    SD Min Max
 #> 1      age 5       1 36.80     34 11.43  25  52
@@ -97,7 +97,7 @@ You can embed any of these modules in your own Shiny apps:
 
 ``` r
 library(shiny)
-library(dataexplorer)
+library(QuickExplore)
 
 ui <- fluidPage(
   data_viewer_ui("viewer")

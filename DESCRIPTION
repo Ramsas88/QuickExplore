@@ -1,4 +1,4 @@
-Package: dataexplorer
+Package: QuickExplore
 Type: Package
 Title: Interactive Dataset Explorer for R and SAS and Other Data Formats
 Version: 0.1.0
@@ -20,8 +20,8 @@ Description: A 'Shiny' application that provides nice interface for
     expressions, inspect per-variable statistics, and export datasets to Excel,
     JSON, CSV, R data, or SAS transport formats.
 License: MIT + file LICENSE
-URL: https://github.com/ramsas88/dataexplorer,https://ramsas88.github.io/data-explorer
-BugReports: https://github.com/ramsas88/dataexplorer/issues
+URL: https://github.com/ramsas88/QuickExplore,https://ramsas88.github.io/QuickExplore
+BugReports: https://github.com/ramsas88/QuickExplore/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
