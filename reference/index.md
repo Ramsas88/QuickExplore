@@ -61,7 +61,7 @@ Reusable Shiny module UI and server functions.
 
 Package-level documentation.
 
-- [`dataexplorer`](https://ramsas88.github.io/data-explorer/reference/dataexplorer-package.md)
-  [`dataexplorer-package`](https://ramsas88.github.io/data-explorer/reference/dataexplorer-package.md)
-  : dataexplorer: Interactive Dataset Explorer for SAS and Other Data
+- [`QuickExplore`](https://ramsas88.github.io/data-explorer/reference/QuickExplore-package.md)
+  [`QuickExplore-package`](https://ramsas88.github.io/data-explorer/reference/QuickExplore-package.md)
+  : QuickExplore: Interactive Dataset Explorer for SAS and Other Data
   Formats

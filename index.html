@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>dataexplorer — Interactive Dataset Explorer • dataexplorer</title>
+<title>QuickExplore — Interactive Dataset Explorer • QuickExplore</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="dataexplorer — Interactive Dataset Explorer">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="QuickExplore — Interactive Dataset Explorer">
 <meta name="description" content="A Shiny application providing a SAS Studio-style interface for browsing, exploring, summarising, and converting datasets in SAS, CSV, and R formats.
 ">
 <meta property="og:description" content="A Shiny application providing a SAS Studio-style interface for browsing, exploring, summarising, and converting datasets in SAS, CSV, and R formats.
@@ -22,7 +22,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">dataexplorer</a>
+    <a class="navbar-brand me-2" href="index.html">QuickExplore</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
@@ -33,7 +33,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="articles/dataexplorer.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="articles/QuickExplore.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
@@ -60,21 +60,19 @@
   <main id="main" class="col-md-9"><div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>dataexplorer</strong> provides a point-and-click Shiny interface modelled after SAS Studio’s library/dataset browser. It supports SAS (<code>.sas7bdat</code>, <code>.xpt</code>), CSV, and R (<code>.rds</code>) files and lets you explore, filter, summarise, and export datasets without writing any code.</p>
+<p><strong>QuickExplore</strong> provides a point-and-click Shiny interface modelled after SAS Studio’s library/dataset browser. It supports SAS (<code>.sas7bdat</code>, <code>.xpt</code>), CSV, and R (<code>.rds</code>) files and lets you explore, filter, summarise, and export datasets without writing any code.</p>
 <p>The package also exposes a set of standalone R functions for use in scripts or other Shiny applications.</p>
 </div>
 <div class="section level2">
 <h2 id="install-package-from-github">install package from GitHub<a class="anchor" aria-label="anchor" href="#install-package-from-github"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Ramsas88/dataexplorer"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Ramsas88/QuickExplore"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="launching-the-application">Launching the Application<a class="anchor" aria-label="anchor" href="#launching-the-application"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/dataexplorer" class="external-link">dataexplorer</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><code>r{eval = FALSE} library(QuickExplore) run_app()</code></p>
 <p>The app opens in your default browser. If you are running inside RStudio it opens in the Viewer pane.</p>
 <div class="section level3">
 <h3 id="first-steps">First Steps<a class="anchor" aria-label="anchor" href="#first-steps"></a>
@@ -94,7 +92,7 @@
 <div class="section level3">
 <h3 id="reading-a-dataset">Reading a Dataset<a class="anchor" aria-label="anchor" href="#reading-a-dataset"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/demog.sas7bdat"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/analysis.csv"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/model_output.rds"</span><span class="op">)</span></span></code></pre></div>
@@ -102,21 +100,21 @@
 <div class="section level3">
 <h3 id="listing-datasets-in-a-directory">Listing Datasets in a Directory<a class="anchor" aria-label="anchor" href="#listing-datasets-in-a-directory"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/list_datasets.html">list_datasets</a></span><span class="op">(</span><span class="st">"/path/to/data/"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="variable-metadata">Variable Metadata<a class="anchor" aria-label="anchor" href="#variable-metadata"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_variable_info.html">get_variable_info</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="descriptive-statistics">Descriptive Statistics<a class="anchor" aria-label="anchor" href="#descriptive-statistics"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">34</span>, <span class="fl">45</span>, <span class="fl">52</span>, <span class="fl">28</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>  sex  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>,</span>
@@ -124,22 +122,16 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Numeric summary</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/dataexplorer" class="external-link">dataexplorer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/QuickExplore" class="external-link">QuickExplore</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/compute_numeric_summary.html">compute_numeric_summary</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"dose"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   Variable N Missing  Mean Median    SD Min Max</span></span>
-<span><span class="co">#&gt; 1      age 5       1 36.80     34 11.43  25  52</span></span>
-<span><span class="co">#&gt; 2     dose 6       0 16.67     15  8.16  10  30</span></span>
 <span></span>
 <span><span class="co"># Categorical summary</span></span>
-<span><span class="fu"><a href="reference/compute_categorical_summary.html">compute_categorical_summary</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"sex"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   sex Frequency Percentage Variable</span></span>
-<span><span class="co">#&gt; 1   F         3         50      sex</span></span>
-<span><span class="co">#&gt; 2   M         3         50      sex</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/compute_categorical_summary.html">compute_categorical_summary</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="grouped-summaries">Grouped Summaries<a class="anchor" aria-label="anchor" href="#grouped-summaries"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/compute_numeric_summary.html">compute_numeric_summary</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"dose"</span><span class="op">)</span>, group_var <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -147,9 +139,9 @@
 <h2 id="shiny-module-api">Shiny Module API<a class="anchor" aria-label="anchor" href="#shiny-module-api"></a>
 </h2>
 <p>Each tab in the application is implemented as a reusable Shiny module. You can embed any of these modules in your own Shiny apps:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/dataexplorer" class="external-link">dataexplorer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/QuickExplore" class="external-link">QuickExplore</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/data_viewer_ui.html">data_viewer_ui</a></span><span class="op">(</span><span class="st">"viewer"</span><span class="op">)</span></span>
@@ -202,8 +194,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ramsas88/dataexplorer/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/ramsas88/dataexplorer/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/ramsas88/QuickExplore/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ramsas88/QuickExplore/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -219,7 +211,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing dataexplorer</a></li>
+<li><a href="authors.html#citation">Citing QuickExplore</a></li>
 </ul>
 </div>
 
