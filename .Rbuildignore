@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.github$
+^README\.Rmd$
+^cran-comments\.md$
+^NEWS\.md$
+^revdep$
+^LICENSE\.md$
+^\.DS_Store$
+^Thumbs\.db$
+^doc$
+^Meta$
