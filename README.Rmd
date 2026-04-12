@@ -27,7 +27,7 @@ pak::pak("Ramsas88/QuickExplore")
 
 ## Launching the Application
 
-```r{eval = FALSE}
+```{r,eval = FALSE}
 library(QuickExplore)
 run_app()
 ```
