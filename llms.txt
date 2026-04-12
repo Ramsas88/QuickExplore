@@ -16,7 +16,10 @@ pak::pak("Ramsas88/QuickExplore")
 
 ## Launching the Application
 
-`r{eval = FALSE} library(QuickExplore) run_app()`
+``` r
+library(QuickExplore)
+run_app()
+```
 
 The app opens in your default browser. If you are running inside RStudio
 it opens in the Viewer pane.
