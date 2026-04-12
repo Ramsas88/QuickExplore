@@ -14,7 +14,7 @@ Authors@R:
              email = "Jagadish.katam@gmail.com")
     )
 Description: A 'Shiny' application that provides nice interface for
-    browsing, exploring, summarising, and converting datasets stored in SAS
+    browsing, exploring, summarising, and converting datasets stored different
     (.sas7bdat, .xpt), CSV (.csv), and R (.rds) formats.  Users can register
     multiple directory-based libraries, interactively filter data using dplyr
     expressions, inspect per-variable statistics, and export datasets to Excel,
