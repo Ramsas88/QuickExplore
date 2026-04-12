@@ -144,7 +144,7 @@ sessionInfo()
 #> [1] QuickExplore_0.1.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] vctrs_0.7.2       cli_3.6.6         knitr_1.51        rlang_1.2.0      
+#>  [1] vctrs_0.7.3       cli_3.6.6         knitr_1.51        rlang_1.2.0      
 #>  [5] xfun_0.57         otel_0.2.0        generics_0.1.4    textshaping_1.0.5
 #>  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       
 #> [13] sass_0.4.10       rmarkdown_2.31    tibble_3.3.1      evaluate_1.0.5   
