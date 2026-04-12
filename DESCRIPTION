@@ -20,7 +20,7 @@ Description: A 'Shiny' application that provides nice interface for
     expressions, inspect per-variable statistics, and export datasets to Excel,
     JSON, CSV, R data, or SAS transport formats.
 License: MIT + file LICENSE
-URL: https://github.com/ramsas88/QuickExplore,https://ramsas88.github.io/QuickExplore
+URL: https://github.com/ramsas88/QuickExplore, https://ramsas88.github.io/QuickExplore/
 BugReports: https://github.com/ramsas88/QuickExplore/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
