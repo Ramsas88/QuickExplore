@@ -159,6 +159,7 @@ code_generator_ui <- function(id) {
 #' @seealso [code_generator_ui()]
 #'
 #' @export
+#' @keywords internal
 code_generator_server <- function(
   id,
   selected_dataset,
