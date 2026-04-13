@@ -72,9 +72,17 @@ active dataset.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactiveVal.html" class="external-link">shiny::reactiveVal()</a></code> containing the currently filtered
-<code>data.frame</code>.</p>
-    </div>
+    <p>A named list with three elements:</p><dl><dt><code>filtered_data</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactiveVal.html" class="external-link">shiny::reactiveVal()</a></code> with the current filtered <code>data.frame</code>.</p></dd>
+
+<dt><code>filter_expr</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> returning the raw filter expression string.</p></dd>
+
+<dt><code>selected_vars</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> returning the selected variable names.</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="data_viewer_ui.html">data_viewer_ui()</a></code></p></div>

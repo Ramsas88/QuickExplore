@@ -35,6 +35,8 @@ Compute descriptive statistics for numeric and categorical variables.
   : Compute summary statistics for numeric variables
 - [`compute_categorical_summary()`](https://ramsas88.github.io/quickexplorer/reference/compute_categorical_summary.md)
   : Compute frequency statistics for categorical variables
+- [`compute_crosstab()`](https://ramsas88.github.io/quickexplorer/reference/compute_crosstab.md)
+  : Compute a cross-tabulation of two categorical variables
 
 ## Shiny Modules
 
@@ -56,6 +58,10 @@ Reusable Shiny module UI and server functions.
   : Dataset Converter Module – UI
 - [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md)
   : Dataset Converter Module – Server
+- [`code_generator_ui()`](https://ramsas88.github.io/quickexplorer/reference/code_generator_ui.md)
+  : Code Generator Module - UI
+- [`code_generator_server()`](https://ramsas88.github.io/quickexplorer/reference/code_generator_server.md)
+  : Code Generator Module - Server
 
 ## Package
 

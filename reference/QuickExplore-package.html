@@ -9,9 +9,15 @@ list_datasets() – enumerate datasets in a directory.
 get_variable_info() – variable-level metadata.
 compute_numeric_summary() / compute_categorical_summary() – tidy
 descriptive statistics.
+compute_crosstab() – wide-format contingency table with optional
+stratification (e.g. SEX × RACE by Treatment).
 format_file_size() – human-readable file size strings.
 
-"><meta property="og:description" content="A 'Shiny' application that provides a SAS Studio-style interface for
+
+The Code Generator feature (code_generator_ui() / code_generator_server())
+automatically produces a reproducible R script reflecting the current
+session state: dataset loading, filter/select expressions, summary
+statistics, and export format."><meta property="og:description" content="A 'Shiny' application that provides a SAS Studio-style interface for
 browsing, exploring, summarising, and converting datasets in SAS
 (.sas7bdat, .xpt), CSV, and R (.rds) formats.
 The main entry point is run_app().  The package also exports several
@@ -21,9 +27,15 @@ list_datasets() – enumerate datasets in a directory.
 get_variable_info() – variable-level metadata.
 compute_numeric_summary() / compute_categorical_summary() – tidy
 descriptive statistics.
+compute_crosstab() – wide-format contingency table with optional
+stratification (e.g. SEX × RACE by Treatment).
 format_file_size() – human-readable file size strings.
 
-"></head><body>
+
+The Code Generator feature (code_generator_ui() / code_generator_server())
+automatically produces a reproducible R script reflecting the current
+session state: dataset loading, filter/select expressions, summary
+statistics, and export format."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -74,8 +86,14 @@ standalone helper functions useful outside the Shiny context:</p><ul><li><p><cod
 <li><p><code><a href="get_variable_info.html">get_variable_info()</a></code> – variable-level metadata.</p></li>
 <li><p><code><a href="compute_numeric_summary.html">compute_numeric_summary()</a></code> / <code><a href="compute_categorical_summary.html">compute_categorical_summary()</a></code> – tidy
 descriptive statistics.</p></li>
+<li><p><code><a href="compute_crosstab.html">compute_crosstab()</a></code> – wide-format contingency table with optional
+stratification (e.g. SEX × RACE by Treatment).</p></li>
 <li><p><code><a href="format_file_size.html">format_file_size()</a></code> – human-readable file size strings.</p></li>
-</ul></div>
+</ul><p>The Code Generator feature (<code><a href="code_generator_ui.html">code_generator_ui()</a></code> / <code><a href="code_generator_server.html">code_generator_server()</a></code>)
+automatically produces a reproducible R script reflecting the current
+session state: dataset loading, filter/select expressions, summary
+statistics, and export format.</p>
+    </div>
 
 
     <div class="section level2">

@@ -72,9 +72,7 @@
 <div class="section level2">
 <h2 id="launching-the-application">Launching the Application<a class="anchor" aria-label="anchor" href="#launching-the-application"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/QuickExplore" class="external-link">QuickExplore</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><code>r{eval = FALSE} library(QuickExplore) run_app()</code></p>
 <p>The app opens in your default browser. If you are running inside RStudio it opens in the Viewer pane.</p>
 <div class="section level3">
 <h3 id="first-steps">First Steps<a class="anchor" aria-label="anchor" href="#first-steps"></a>
@@ -94,7 +92,7 @@
 <div class="section level3">
 <h3 id="reading-a-dataset">Reading a Dataset<a class="anchor" aria-label="anchor" href="#reading-a-dataset"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/demog.sas7bdat"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/analysis.csv"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_dataset.html">read_dataset</a></span><span class="op">(</span><span class="st">"/path/to/data/model_output.rds"</span><span class="op">)</span></span></code></pre></div>
@@ -102,21 +100,21 @@
 <div class="section level3">
 <h3 id="listing-datasets-in-a-directory">Listing Datasets in a Directory<a class="anchor" aria-label="anchor" href="#listing-datasets-in-a-directory"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/list_datasets.html">list_datasets</a></span><span class="op">(</span><span class="st">"/path/to/data/"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="variable-metadata">Variable Metadata<a class="anchor" aria-label="anchor" href="#variable-metadata"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_variable_info.html">get_variable_info</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="descriptive-statistics">Descriptive Statistics<a class="anchor" aria-label="anchor" href="#descriptive-statistics"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">34</span>, <span class="fl">45</span>, <span class="fl">52</span>, <span class="fl">28</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>  sex  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>,</span>
@@ -133,7 +131,7 @@
 <div class="section level3">
 <h3 id="grouped-summaries">Grouped Summaries<a class="anchor" aria-label="anchor" href="#grouped-summaries"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/compute_numeric_summary.html">compute_numeric_summary</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"dose"</span><span class="op">)</span>, group_var <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -141,7 +139,7 @@
 <h2 id="shiny-module-api">Shiny Module API<a class="anchor" aria-label="anchor" href="#shiny-module-api"></a>
 </h2>
 <p>Each tab in the application is implemented as a reusable Shiny module. You can embed any of these modules in your own Shiny apps:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ramsas88/QuickExplore" class="external-link">QuickExplore</a></span><span class="op">)</span></span>
 <span></span>

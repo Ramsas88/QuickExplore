@@ -23,7 +23,17 @@ summary_panel_server(id, loaded_data)
 
 ## Value
 
-`NULL` (invisibly). Called for side effects.
+A named list with two elements:
+
+- `summary_vars`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the selected variable names.
+
+- `group_var`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the grouping variable name (`""` = none).
 
 ## See also
 

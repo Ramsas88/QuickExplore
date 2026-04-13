@@ -72,8 +72,17 @@ active dataset.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>NULL</code> (invisibly).  Called for side effects.</p>
-    </div>
+    <p>A named list with three elements:</p><dl><dt><code>output_format</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> returning the selected output format string.</p></dd>
+
+<dt><code>csv_delim</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> returning the CSV delimiter character.</p></dd>
+
+<dt><code>json_pretty</code></dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> returning <code>TRUE</code> to pretty-print JSON output.</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="converter_ui.html">converter_ui()</a></code></p></div>

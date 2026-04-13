@@ -62,7 +62,15 @@ Supported formats: <code>.sas7bdat</code>, <code>.xpt</code>, <code>.csv</code>,
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>data.frame</code> (or tibble) with the dataset contents.</p>
+    <p>A <code>data.frame</code> (or tibble) with the dataset contents.  For SAS
+formats, all-whitespace character values are coerced to <code>NA_character_</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>For SAS formats (<code>.sas7bdat</code>, <code>.xpt</code>), blank strings are automatically
+converted to <code>NA</code> after loading.  This matches SAS behaviour where a
+blank character value is treated as a system-missing value, not as a
+valid empty string.</p>
     </div>
 
     <div class="section level2">

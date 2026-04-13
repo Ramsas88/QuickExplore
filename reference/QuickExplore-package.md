@@ -23,8 +23,20 @@ outside the Shiny context:
   [`compute_categorical_summary()`](https://ramsas88.github.io/quickexplorer/reference/compute_categorical_summary.md)
   – tidy descriptive statistics.
 
+- [`compute_crosstab()`](https://ramsas88.github.io/quickexplorer/reference/compute_crosstab.md)
+  – wide-format contingency table with optional stratification (e.g. SEX
+  × RACE by Treatment).
+
 - [`format_file_size()`](https://ramsas88.github.io/quickexplorer/reference/format_file_size.md)
   – human-readable file size strings.
+
+The Code Generator feature
+([`code_generator_ui()`](https://ramsas88.github.io/quickexplorer/reference/code_generator_ui.md)
+/
+[`code_generator_server()`](https://ramsas88.github.io/quickexplorer/reference/code_generator_server.md))
+automatically produces a reproducible R script reflecting the current
+session state: dataset loading, filter/select expressions, summary
+statistics, and export format.
 
 ## See also
 

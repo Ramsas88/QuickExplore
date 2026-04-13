@@ -29,7 +29,22 @@ converter_server(id, loaded_data, selected_dataset)
 
 ## Value
 
-`NULL` (invisibly). Called for side effects.
+A named list with three elements:
+
+- `output_format`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the selected output format string.
+
+- `csv_delim`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the CSV delimiter character.
+
+- `json_pretty`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning `TRUE` to pretty-print JSON output.
 
 ## See also
 

@@ -29,9 +29,23 @@ data_viewer_server(id, loaded_data, selected_dataset)
 
 ## Value
 
-A
-[`shiny::reactiveVal()`](https://rdrr.io/pkg/shiny/man/reactiveVal.html)
-containing the currently filtered `data.frame`.
+A named list with three elements:
+
+- `filtered_data`:
+
+  A
+  [`shiny::reactiveVal()`](https://rdrr.io/pkg/shiny/man/reactiveVal.html)
+  with the current filtered `data.frame`.
+
+- `filter_expr`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the raw filter expression string.
+
+- `selected_vars`:
+
+  A [`shiny::reactive()`](https://rdrr.io/pkg/shiny/man/reactive.html)
+  returning the selected variable names.
 
 ## See also
 
