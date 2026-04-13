@@ -16,8 +16,12 @@ data_viewer_server(id, loaded_data, selected_dataset)
 active dataset.}
 }
 \value{
-A \code{\link[shiny:reactiveVal]{shiny::reactiveVal()}} containing the currently filtered
-\code{data.frame}.
+A named list with three elements:
+\describe{
+\item{\code{filtered_data}}{A \code{\link[shiny:reactiveVal]{shiny::reactiveVal()}} with the current filtered \code{data.frame}.}
+\item{\code{filter_expr}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the raw filter expression string.}
+\item{\code{selected_vars}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the selected variable names.}
+}
 }
 \description{
 Handles data display, filtering, variable inspection, and download for the

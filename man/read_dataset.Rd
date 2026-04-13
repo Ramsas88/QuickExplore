@@ -10,11 +10,18 @@ read_dataset(filepath)
 \item{filepath}{Character string. Full path to the dataset file.}
 }
 \value{
-A \code{data.frame} (or tibble) with the dataset contents.
+A \code{data.frame} (or tibble) with the dataset contents.  For SAS
+formats, all-whitespace character values are coerced to \code{NA_character_}.
 }
 \description{
 Dispatches to the appropriate reader based on the file extension.
 Supported formats: \code{.sas7bdat}, \code{.xpt}, \code{.csv}, \code{.rds}.
+}
+\details{
+For SAS formats (\code{.sas7bdat}, \code{.xpt}), blank strings are automatically
+converted to \code{NA} after loading.  This matches SAS behaviour where a
+blank character value is treated as a system-missing value, not as a
+valid empty string.
 }
 \examples{
 \dontrun{

@@ -56,7 +56,43 @@ summary_panel_ui <- function(id) {
 
       shiny::h5(shiny::icon("exclamation-circle"), " Missing Values",
         class = "text-warning mt-4"),
-      DT::dataTableOutput(ns("missing_summary"))
+      DT::dataTableOutput(ns("missing_summary")),
+
+      # ── Cross-tabulation section ───────────────────────────────────
+      shiny::h5(
+        shiny::icon("th"), " Cross-tabulation",
+        class = "text-info mt-4"
+      ),
+      shiny::p(
+        class = "text-muted small mb-2",
+        "Count combinations of two categorical variables, optionally stratified ",
+        "by a treatment or grouping variable (e.g. SEX \u00d7 RACE by Treatment)."
+      ),
+      shiny::fluidRow(
+        shiny::column(4,
+          shiny::selectInput(ns("ct_row_var"), "Row variable:",
+            choices = c("(select)" = ""))
+        ),
+        shiny::column(4,
+          shiny::selectInput(ns("ct_col_var"), "Column variable:",
+            choices = c("(select)" = ""))
+        ),
+        shiny::column(4,
+          shiny::selectInput(ns("ct_strat_var"), "Stratify by (optional):",
+            choices = c("None" = ""))
+        )
+      ),
+      shiny::div(class = "mb-3",
+        shiny::actionButton(ns("compute_crosstab"), "Compute Cross-tab",
+          icon  = shiny::icon("table"),
+          class = "btn-info btn-sm"
+        ),
+        shiny::downloadButton(ns("download_crosstab"), "Export",
+          class = "btn-outline-secondary btn-sm ms-2"
+        )
+      ),
+      shiny::uiOutput(ns("crosstab_info")),
+      DT::dataTableOutput(ns("crosstab_table"))
     )
   )
 }
@@ -71,7 +107,11 @@ summary_panel_ui <- function(id) {
 #' @param loaded_data A [shiny::reactiveVal()] containing the current
 #'   `data.frame`.
 #'
-#' @return `NULL` (invisibly).  Called for side effects.
+#' @return A named list with two elements:
+#'   \describe{
+#'     \item{`summary_vars`}{A [shiny::reactive()] returning the selected variable names.}
+#'     \item{`group_var`}{A [shiny::reactive()] returning the grouping variable name (`""` = none).}
+#'   }
 #'
 #' @seealso [summary_panel_ui()]
 #'
@@ -82,6 +122,9 @@ summary_panel_server <- function(id, loaded_data) {
 
     summary_results <- shiny::reactiveValues(numeric = NULL, categorical = NULL)
 
+    # Cross-tab results storage
+    crosstab_results <- shiny::reactiveVal(NULL)
+
     # Update variable choices -------------------------------------------
     shiny::observeEvent(loaded_data(), {
       df <- loaded_data()
@@ -90,6 +133,22 @@ summary_panel_server <- function(id, loaded_data) {
         choices = names(df), selected = NULL)
       shiny::updateSelectInput(session, "group_var",
         choices = c("None" = "", names(df)))
+
+      # Cross-tab: offer only plausible categorical variables
+      all_vars <- names(df)
+      shiny::updateSelectInput(session, "ct_row_var",
+        choices  = c("(select)" = "", all_vars),
+        selected = ""
+      )
+      shiny::updateSelectInput(session, "ct_col_var",
+        choices  = c("(select)" = "", all_vars),
+        selected = ""
+      )
+      shiny::updateSelectInput(session, "ct_strat_var",
+        choices  = c("None" = "", all_vars),
+        selected = ""
+      )
+      crosstab_results(NULL)
     })
 
     # Dataset overview cards --------------------------------------------
@@ -225,6 +284,113 @@ summary_panel_server <- function(id, loaded_data) {
       }
     )
 
-    invisible(NULL)
+    # Cross-tab compute ─────────────────────────────────────────────
+    shiny::observeEvent(input$compute_crosstab, {
+      shiny::req(loaded_data())
+      rv <- input$ct_row_var
+      cv <- input$ct_col_var
+      if (!nzchar(rv) || rv == "(select)" ||
+          !nzchar(cv) || cv == "(select)") {
+        shiny::showNotification(
+          "Please select both a row variable and a column variable.",
+          type = "warning"
+        )
+        return()
+      }
+      if (rv == cv) {
+        shiny::showNotification(
+          "Row and column variables must be different.",
+          type = "warning"
+        )
+        return()
+      }
+      strat <- if (nzchar(input$ct_strat_var)) input$ct_strat_var else NULL
+      shiny::withProgress(message = "Computing cross-tabulation...", {
+        result <- tryCatch(
+          compute_crosstab(loaded_data(), rv, cv, strat),
+          error = function(e) {
+            shiny::showNotification(
+              paste("Cross-tab error:", e$message), type = "error"
+            )
+            NULL
+          }
+        )
+        crosstab_results(result)
+      })
+    })
+
+    # Cross-tab info banner ─────────────────────────────────────────
+    output$crosstab_info <- shiny::renderUI({
+      shiny::req(crosstab_results())
+      rv    <- input$ct_row_var
+      cv    <- input$ct_col_var
+      strat <- input$ct_strat_var
+      label <- if (nzchar(strat))
+        paste0(rv, " \u00d7 ", cv, "  stratified by  ", strat)
+      else
+        paste0(rv, " \u00d7 ", cv)
+      shiny::div(
+        class = "alert alert-info py-1 px-3 mb-2",
+        shiny::icon("table"), " Cross-tab: ",
+        shiny::strong(label)
+      )
+    })
+
+    # Cross-tab DT table ────────────────────────────────────────────
+    output$crosstab_table <- DT::renderDataTable({
+      shiny::req(crosstab_results())
+      ct_df <- crosstab_results()
+
+      # Identify the "Total" row for highlighting
+      row_col <- if ("Stratum" %in% names(ct_df)) names(ct_df)[2L] else names(ct_df)[1L]
+      total_rows <- which(ct_df[[row_col]] == "Total") - 1L  # DT is 0-indexed
+
+      DT::datatable(
+        ct_df,
+        options = list(
+          pageLength = 50,
+          scrollX    = TRUE,
+          dom        = "ft",
+          columnDefs = list(
+            list(className = "dt-center", targets = "_all")
+          )
+        ),
+        rownames  = FALSE,
+        class     = "table-bordered table-hover table-sm",
+        selection = "none"
+      ) |>
+        DT::formatStyle(
+          "Total",
+          fontWeight      = "bold",
+          backgroundColor = "#f0f4ff"
+        ) |>
+        DT::formatStyle(
+          row_col,
+          targets         = "row",
+          fontWeight      = DT::styleEqual("Total", "bold"),
+          backgroundColor = DT::styleEqual("Total", "#f0f4ff")
+        )
+    })
+
+    # Cross-tab download ────────────────────────────────────────────
+    output$download_crosstab <- shiny::downloadHandler(
+      filename = function() {
+        rv    <- if (nzchar(input$ct_row_var)) input$ct_row_var else "row"
+        cv    <- if (nzchar(input$ct_col_var)) input$ct_col_var else "col"
+        paste0("crosstab_", rv, "_x_", cv, "_", Sys.Date(), ".csv")
+      },
+      content = function(file) {
+        shiny::req(crosstab_results())
+        readr::write_csv(crosstab_results(), file)
+      }
+    )
+
+    list(
+      summary_vars   = shiny::reactive(input$summary_vars),
+      group_var      = shiny::reactive(input$group_var),
+      crosstab_row   = shiny::reactive(input$ct_row_var),
+      crosstab_col   = shiny::reactive(input$ct_col_var),
+      crosstab_strat = shiny::reactive(input$ct_strat_var)
+    )
   })
 }

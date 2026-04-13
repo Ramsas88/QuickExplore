@@ -3,9 +3,15 @@
 #' Dispatches to the appropriate reader based on the file extension.
 #' Supported formats: `.sas7bdat`, `.xpt`, `.csv`, `.rds`.
 #'
+#' For SAS formats (`.sas7bdat`, `.xpt`), blank strings are automatically
+#' converted to `NA` after loading.  This matches SAS behaviour where a
+#' blank character value is treated as a system-missing value, not as a
+#' valid empty string.
+#'
 #' @param filepath Character string. Full path to the dataset file.
 #'
-#' @return A `data.frame` (or tibble) with the dataset contents.
+#' @return A `data.frame` (or tibble) with the dataset contents.  For SAS
+#'   formats, all-whitespace character values are coerced to `NA_character_`.
 #'
 #' @examples
 #' \dontrun{
@@ -25,6 +31,23 @@ read_dataset <- function(filepath) {
       "rds"      = readRDS(filepath),
       stop(paste("Unsupported file format:", ext))
     )
+
+    # SAS blank-to-NA: SAS stores missing character values as " " (one space).
+    # Convert any all-whitespace character column value to NA so that
+    # downstream summaries and filters behave consistently with other formats.
+    if (ext %in% c("sas7bdat", "xpt")) {
+      df <- as.data.frame(
+        lapply(df, function(x) {
+          if (is.character(x)) {
+            x[trimws(x) == ""] <- NA_character_
+          }
+          x
+        }),
+        stringsAsFactors = FALSE,
+        check.names      = FALSE
+      )
+    }
+
     df
   }, error = function(e) {
     stop(paste("Error reading file:", e$message))
@@ -281,3 +304,84 @@ compute_categorical_summary <- function(df, vars, group_var = NULL) {
   dplyr::bind_rows(results)
 }
 utils::globalVariables(c("Frequency", "preview_text"))
+
+
+#' Compute a cross-tabulation of two categorical variables
+#'
+#' Produces a wide-format contingency table of `row_var` (rows) by `col_var`
+#' (columns), including row and column totals.  When a `strat_var` is supplied
+#' the table is computed separately for each level of the stratification
+#' variable and the results are stacked with a leading `Stratum` column.
+#'
+#' Missing values in any of the three variables are displayed as `"(Missing)"`
+#' rather than being silently dropped, so analysts can spot incomplete records.
+#'
+#' @param df A `data.frame` or tibble.
+#' @param row_var Character string. Name of the row variable (e.g. `"SEX"`).
+#' @param col_var Character string. Name of the column variable (e.g. `"RACE"`).
+#' @param strat_var Character string or `NULL`. Optional stratification
+#'   variable (e.g. `"TRT01P"`).  Pass `NULL` or `""` for an unstratified
+#'   table.
+#'
+#' @return A `data.frame` in wide format:
+#'   \itemize{
+#'     \item Column 1 (or 2 if stratified): `row_var` levels plus a `"Total"` row.
+#'     \item Middle columns: one column per `col_var` level.
+#'     \item Last column: `Total` (row sums).
+#'     \item If `strat_var` is given, a leading `Stratum` column identifies
+#'       each stratum.  A grand-total block across all strata is **not**
+#'       appended automatically — compute the unstratified table for that.
+#'   }
+#'
+#' @examples
+#' df <- data.frame(
+#'   SEX  = c("M","F","M","F","M","F"),
+#'   RACE = c("White","White","Black","Asian","Black","White"),
+#'   TRT  = c("A","A","B","B","A","B")
+#' )
+#' compute_crosstab(df, "SEX", "RACE")
+#' compute_crosstab(df, "SEX", "RACE", strat_var = "TRT")
+#'
+#' @export
+compute_crosstab <- function(df, row_var, col_var, strat_var = NULL) {
+  # ── helper: NA → "(Missing)" for display ──────────────────────────
+  to_label <- function(x) ifelse(is.na(x), "(Missing)", as.character(x))
+
+  # ── helper: build one contingency table for a sub-data.frame ──────
+  make_one_ct <- function(sub_df, rv, cv) {
+    row_lab <- to_label(sub_df[[rv]])
+    col_lab <- to_label(sub_df[[cv]])
+
+    ct      <- table(row_lab, col_lab)
+    ct_wide <- as.data.frame.matrix(ct)          # rows = rv levels, cols = cv levels
+
+    # Row totals column
+    ct_wide[["Total"]] <- rowSums(ct_wide)
+
+    # Column totals row
+    col_totals           <- as.data.frame(t(colSums(ct_wide)))
+    ct_wide              <- rbind(ct_wide, col_totals)
+
+    # Promote rownames to a proper column (rv name)
+    ct_wide[[rv]] <- c(rownames(ct_wide)[seq_len(nrow(ct_wide) - 1L)], "Total")
+    rownames(ct_wide) <- NULL
+
+    # Put rv column first
+    ct_wide[, c(rv, setdiff(names(ct_wide), rv)), drop = FALSE]
+  }
+
+  # ── stratified path ───────────────────────────────────────────────
+  if (!is.null(strat_var) && nzchar(strat_var) && strat_var %in% names(df)) {
+    strat_labels <- sort(unique(to_label(df[[strat_var]])))
+    parts <- lapply(strat_labels, function(lv) {
+      sub_df <- df[to_label(df[[strat_var]]) == lv, , drop = FALSE]
+      ct_df  <- make_one_ct(sub_df, row_var, col_var)
+      ct_df[["Stratum"]] <- paste0(strat_var, " = ", lv)
+      ct_df[, c("Stratum", names(ct_df)[names(ct_df) != "Stratum"]), drop = FALSE]
+    })
+    return(dplyr::bind_rows(parts))
+  }
+
+  # ── unstratified path ─────────────────────────────────────────────
+  make_one_ct(df, row_var, col_var)
+}

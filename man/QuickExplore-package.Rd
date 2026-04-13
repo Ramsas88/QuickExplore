@@ -18,8 +18,15 @@ standalone helper functions useful outside the Shiny context:
 \item \code{\link[=get_variable_info]{get_variable_info()}} – variable-level metadata.
 \item \code{\link[=compute_numeric_summary]{compute_numeric_summary()}} / \code{\link[=compute_categorical_summary]{compute_categorical_summary()}} – tidy
 descriptive statistics.
+\item \code{\link[=compute_crosstab]{compute_crosstab()}} – wide-format contingency table with optional
+stratification (e.g. SEX × RACE by Treatment).
 \item \code{\link[=format_file_size]{format_file_size()}} – human-readable file size strings.
 }
+
+The Code Generator feature (\code{\link[=code_generator_ui]{code_generator_ui()}} / \code{\link[=code_generator_server]{code_generator_server()}})
+automatically produces a reproducible R script reflecting the current
+session state: dataset loading, filter/select expressions, summary
+statistics, and export format.
 }
 \seealso{
 Useful links:

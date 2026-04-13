@@ -13,7 +13,14 @@
 #' * [get_variable_info()] – variable-level metadata.
 #' * [compute_numeric_summary()] / [compute_categorical_summary()] – tidy
 #'   descriptive statistics.
+#' * [compute_crosstab()] – wide-format contingency table with optional
+#'   stratification (e.g. SEX × RACE by Treatment).
 #' * [format_file_size()] – human-readable file size strings.
+#'
+#' The Code Generator feature ([code_generator_ui()] / [code_generator_server()])
+#' automatically produces a reproducible R script reflecting the current
+#' session state: dataset loading, filter/select expressions, summary
+#' statistics, and export format.
 #'
 #' @keywords internal
 "_PACKAGE"

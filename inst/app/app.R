@@ -14,7 +14,7 @@ ui <- bslib::page_fluid(
   theme = bslib::bs_theme(
     version      = 5,
     bootswatch   = "flatly",
-    primary      = "#0d47a1",
+    primary      = "#556B2F",   # olive green
     "font-size-base" = "0.9rem"
   ),
 
@@ -52,6 +52,7 @@ ui <- bslib::page_fluid(
       bslib::navset_card_pill(
         id = "main_tabs",
 
+        # ── Data tab ────────────────────────────────────────────────────
         bslib::nav_panel(
           title = tagList(icon("table"), " Data"),
           value = "data_tab",
@@ -77,6 +78,7 @@ ui <- bslib::page_fluid(
           )
         ),
 
+        # ── Summary tab ─────────────────────────────────────────────────
         bslib::nav_panel(
           title = tagList(icon("chart-pie"), " Summary"),
           value = "summary_tab",
@@ -95,6 +97,7 @@ ui <- bslib::page_fluid(
           )
         ),
 
+        # ── Convert tab ─────────────────────────────────────────────────
         bslib::nav_panel(
           title = tagList(icon("exchange-alt"), " Convert"),
           value = "convert_tab",
@@ -109,6 +112,25 @@ ui <- bslib::page_fluid(
               icon("file-export"),
               h4("No Dataset to Convert"),
               p("Load a dataset first to convert it to another format.")
+            )
+          )
+        ),
+
+        # ── Code tab ────────────────────────────────────────────────────
+        bslib::nav_panel(
+          title = tagList(icon("code"), " Code"),
+          value = "code_tab",
+          conditionalPanel(
+            condition = "output.has_data === true",
+            code_generator_ui("codegen")
+          ),
+          conditionalPanel(
+            condition = "output.has_data !== true",
+            div(
+              class = "empty-state",
+              icon("scroll"),
+              h4("No Code Yet"),
+              p("Load a dataset to auto-generate reproducible R code for your session.")
             )
           )
         )
@@ -132,10 +154,28 @@ server <- function(input, output, session) {
   output$has_data <- reactive({ !is.null(loaded_data()) })
   outputOptions(output, "has_data", suspendWhenHidden = FALSE)
 
+  # ── Module wiring ──────────────────────────────────────────────────────
   dataset_browser_server("browser", selected_dataset, loaded_data)
-  filtered_data <- data_viewer_server("viewer", loaded_data, selected_dataset)
-  summary_panel_server("summary", loaded_data)
-  converter_server("converter", loaded_data, selected_dataset)
+
+  viewer_state   <- data_viewer_server("viewer",    loaded_data,  selected_dataset)
+  summary_state  <- summary_panel_server("summary", loaded_data)
+  converter_state <- converter_server("converter",  loaded_data,  selected_dataset)
+
+  # ── Code generator ─────────────────────────────────────────────────────
+  code_generator_server(
+    id               = "codegen",
+    selected_dataset = selected_dataset,
+    filter_expr      = viewer_state$filter_expr,
+    selected_vars    = viewer_state$selected_vars,
+    group_var        = summary_state$group_var,
+    summary_vars     = summary_state$summary_vars,
+    output_format    = converter_state$output_format,
+    csv_delim        = converter_state$csv_delim,
+    json_pretty      = converter_state$json_pretty,
+    crosstab_row     = summary_state$crosstab_row,
+    crosstab_col     = summary_state$crosstab_col,
+    crosstab_strat   = summary_state$crosstab_strat
+  )
 }
 
 # ── Launch ─────────────────────────────────────────────────────────────────────

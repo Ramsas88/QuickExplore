@@ -1,12 +1,56 @@
-/* SAS Studio Explorer - Custom Styles */
+/* ============================================================
+   QuickExplore – Custom Styles
+   Olive Green theme  |  Viewport-filling data tables
+   ============================================================ */
 
-/* Overall layout */
+/* ── Olive green design tokens ─────────────────────────────── */
+:root {
+  --qe-primary:       #556B2F;   /* dark olive green            */
+  --qe-primary-dark:  #3A4A1E;   /* header dark stop            */
+  --qe-primary-mid:   #4A6024;   /* header mid stop             */
+  --qe-primary-light: #6B7A3C;   /* header light stop           */
+  --qe-tint-bg:       #EFF4E8;   /* hover / info tint           */
+  --qe-tint-border:   #B8CC8A;   /* hover / info border         */
+  --qe-tint-text:     #2E3D1A;   /* info text on tinted surface */
+}
+
+/* ── Overall layout ─────────────────────────────────────────── */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f6fa;
 }
 
-/* Sidebar styling */
+/* Remove the extra bottom gap bslib introduces */
+.main-container {
+  padding-bottom: 0 !important;
+}
+
+/* ── App header ─────────────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(135deg,
+    var(--qe-primary-dark) 0%,
+    var(--qe-primary-mid)  50%,
+    var(--qe-primary-light) 100%);
+  color: white;
+  padding: 8px 16px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.app-header .header-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────── */
 .sidebar-panel {
   background-color: #ffffff;
   border-right: 1px solid #dee2e6;
@@ -22,8 +66,8 @@ body {
 }
 
 .library-item:hover {
-  background-color: #e7f1ff !important;
-  border-color: #86b7fe;
+  background-color: var(--qe-tint-bg) !important;
+  border-color: var(--qe-tint-border);
 }
 
 .library-item a {
@@ -47,10 +91,10 @@ body {
   color: inherit;
 }
 
-/* Card styling */
+/* ── Cards ──────────────────────────────────────────────────── */
 .card {
   border: 1px solid #dee2e6;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
 }
 
 .card-header {
@@ -58,7 +102,7 @@ body {
   border-bottom: 1px solid #dee2e6;
 }
 
-/* Tab styling */
+/* ── Navigation tabs & pills ────────────────────────────────── */
 .nav-tabs .nav-link {
   color: #495057;
   font-size: 0.9rem;
@@ -66,20 +110,37 @@ body {
 
 .nav-tabs .nav-link.active {
   font-weight: 600;
-  color: #0d6efd;
-  border-bottom: 2px solid #0d6efd;
+  color: var(--qe-primary);
+  border-bottom: 2px solid var(--qe-primary);
 }
 
-/* Table styling */
+/* Pill nav active state – override Bootstrap's flatly defaults */
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: var(--qe-primary) !important;
+  border-color: var(--qe-primary) !important;
+  color: #fff !important;
+}
+
+.nav-pills .nav-link:not(.active):hover {
+  background-color: var(--qe-tint-bg);
+  color: var(--qe-primary);
+}
+
+/* ── Data tables ─────────────────────────────────────────────── */
 .dataTables_wrapper {
   font-size: 0.85rem;
 }
 
 table.dataTable thead th {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
+  background-color: #f4f6f1;          /* very light olive tint     */
+  border-bottom: 2px solid #c8d6a8;  /* olive-tinted border       */
   font-weight: 600;
   font-size: 0.85rem;
+}
+
+table.dataTable thead th:hover {
+  background-color: var(--qe-tint-bg);
 }
 
 table.dataTable tbody td {
@@ -87,42 +148,59 @@ table.dataTable tbody td {
   font-size: 0.83rem;
 }
 
-/* SAS-style header bar */
-.app-header {
-  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #1565c0 100%);
-  color: white;
-  padding: 8px 16px;
-  margin-bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* ── Viewport-filling table containers ───────────────────────
+   These rules make the DT scroll-containers stretch to use
+   all available vertical space instead of a fixed 500px.    */
+
+/*  Data Viewer tab – DT inside navset_card_tab             */
+#viewer-data_table .dataTables_scrollBody,
+#viewer .dataTables_scrollBody {
+  max-height: calc(100vh - 295px) !important;
+  height:     calc(100vh - 295px) !important;
 }
 
-.app-header h4 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
+/*  Explore Data tab – has filter controls above the table  */
+#viewer-explore_table .dataTables_scrollBody {
+  max-height: calc(100vh - 410px) !important;
+  height:     calc(100vh - 410px) !important;
 }
 
-.app-header .header-subtitle {
-  font-size: 0.75rem;
-  opacity: 0.8;
+/*  Variables tab – moderate height, details panel below    */
+#viewer-var_table .dataTables_scrollBody {
+  max-height: calc(100vh - 480px) !important;
+  height:     calc(100vh - 480px) !important;
 }
 
-/* Badge styling */
+/*  Summary panel numeric / categorical / missing tables    */
+#summary-numeric_summary .dataTables_scrollBody,
+#summary-categorical_summary .dataTables_scrollBody,
+#summary-missing_summary .dataTables_scrollBody {
+  max-height: 280px !important;
+}
+
+/* ── Alert / info colours ────────────────────────────────────── */
+.alert-info {
+  background-color: var(--qe-tint-bg);
+  border-color:     var(--qe-tint-border);
+  color:            var(--qe-tint-text);
+}
+
+/* ── Badge styling ───────────────────────────────────────────── */
 .badge {
   font-weight: 500;
   font-size: 0.7rem;
 }
 
-/* Alert info cards */
-.alert-info {
-  background-color: #e7f3ff;
-  border-color: #b6d4fe;
-  color: #084298;
+.badge.bg-light {
+  border: 1px solid #dee2e6;
 }
 
-/* Stats cards */
+.badge.bg-light:hover {
+  background-color: var(--qe-tint-bg) !important;
+  border-color: var(--qe-tint-border) !important;
+}
+
+/* ── Stats overview cards ────────────────────────────────────── */
 .stats-card {
   text-align: center;
   padding: 10px;
@@ -135,19 +213,48 @@ table.dataTable tbody td {
   font-weight: 700;
 }
 
-/* Format info table */
+/* Override text-primary for olive green */
+.text-primary {
+  color: var(--qe-primary) !important;
+}
+
+/* ── Format reference table (Convert tab) ────────────────────── */
 .format-info .table th {
   font-size: 0.8rem;
-  background-color: #f8f9fa;
+  background-color: #f4f6f1;
 }
 
 .format-info .table td {
   font-size: 0.8rem;
 }
 
-/* Scrollbar styling */
+/* ── Buttons – tweak btn-primary to match theme exactly ──────── */
+.btn-primary {
+  background-color: var(--qe-primary) !important;
+  border-color:     var(--qe-primary) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--qe-primary-mid) !important;
+  border-color:     var(--qe-primary-mid) !important;
+}
+
+.btn-outline-primary {
+  color:        var(--qe-primary) !important;
+  border-color: var(--qe-primary) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--qe-primary) !important;
+  color: #fff !important;
+}
+
+/* ── Scrollbar styling ───────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -155,23 +262,30 @@ table.dataTable tbody td {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #b0bc93;     /* muted olive                       */
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: var(--qe-primary);
 }
 
-/* Responsive adjustments */
+/* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar-panel {
     height: auto;
     max-height: 300px;
   }
+
+  #viewer-data_table .dataTables_scrollBody,
+  #viewer .dataTables_scrollBody,
+  #viewer-explore_table .dataTables_scrollBody {
+    max-height: 380px !important;
+    height:     380px !important;
+  }
 }
 
-/* Empty state */
+/* ── Empty state ─────────────────────────────────────────────── */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -184,11 +298,51 @@ table.dataTable tbody td {
   opacity: 0.5;
 }
 
-/* Quick filter badges */
-.badge.bg-light {
-  border: 1px solid #dee2e6;
+/* ── Code Generator panel ────────────────────────────────────── */
+.code-generator-container {
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background-color: #0d1117;
+  overflow: hidden;
 }
 
-.badge.bg-light:hover {
-  background-color: #e2e6ea !important;
+.code-generator-container pre.shiny-text-output {
+  background-color: #0d1117;
+  color: #e6edf3;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 16px 18px;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+  white-space: pre;
+  word-break: normal;
+}
+
+.code-generator-container {
+  position: relative;
+}
+
+/* Section checkbox labels */
+#codegen .shiny-input-container label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Toast notification */
+#copy_toast .alert,
+[id$="copy_toast"] .alert {
+  font-size: 0.85rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Cross-tab table highlights ─────────────────────────────── */
+#summary-crosstab_table table.dataTable thead th {
+  background-color: #eef2e6;
+  border-bottom: 2px solid var(--qe-tint-border);
 }

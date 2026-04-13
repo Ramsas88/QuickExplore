@@ -119,8 +119,12 @@ data_viewer_ui <- function(id) {
 #' @param selected_dataset A [shiny::reactiveVal()] with the file path of the
 #'   active dataset.
 #'
-#' @return A [shiny::reactiveVal()] containing the currently filtered
-#'   `data.frame`.
+#' @return A named list with three elements:
+#'   \describe{
+#'     \item{`filtered_data`}{A [shiny::reactiveVal()] with the current filtered `data.frame`.}
+#'     \item{`filter_expr`}{A [shiny::reactive()] returning the raw filter expression string.}
+#'     \item{`selected_vars`}{A [shiny::reactive()] returning the selected variable names.}
+#'   }
 #'
 #' @seealso [data_viewer_ui()]
 #'
@@ -180,7 +184,7 @@ data_viewer_server <- function(id, loaded_data, selected_dataset) {
         options = list(
           pageLength  = 25,
           scrollX     = TRUE,
-          scrollY     = "500px",
+          scrollY     = "calc(100vh - 295px)",
           dom         = "Bfrtip",
           buttons     = list("copy", "csv"),
           columnDefs  = list(list(className = "dt-center", targets = "_all")),
@@ -302,7 +306,7 @@ data_viewer_server <- function(id, loaded_data, selected_dataset) {
       }))
       DT::datatable(df,
         options = list(
-          pageLength = 25, scrollX = TRUE, scrollY = "500px",
+          pageLength = 25, scrollX = TRUE, scrollY = "calc(100vh - 410px)",
           dom      = "frtip",
           language = list(
             info = "Showing _START_ to _END_ of _TOTAL_ filtered observations")
@@ -458,6 +462,10 @@ data_viewer_server <- function(id, loaded_data, selected_dataset) {
       }
     )
 
-    filtered_data
+    list(
+      filtered_data = filtered_data,
+      filter_expr   = shiny::reactive(input$filter_expr),
+      selected_vars = shiny::reactive(input$explore_vars)
+    )
   })
 }

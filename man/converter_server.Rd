@@ -16,7 +16,12 @@ converter_server(id, loaded_data, selected_dataset)
 active dataset.}
 }
 \value{
-\code{NULL} (invisibly).  Called for side effects.
+A named list with three elements:
+\describe{
+\item{\code{output_format}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the selected output format string.}
+\item{\code{csv_delim}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the CSV delimiter character.}
+\item{\code{json_pretty}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning \code{TRUE} to pretty-print JSON output.}
+}
 }
 \description{
 Handles the dataset-conversion download for all supported output formats:

@@ -13,7 +13,11 @@ summary_panel_server(id, loaded_data)
 \code{data.frame}.}
 }
 \value{
-\code{NULL} (invisibly).  Called for side effects.
+A named list with two elements:
+\describe{
+\item{\code{summary_vars}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the selected variable names.}
+\item{\code{group_var}}{A \code{\link[shiny:reactive]{shiny::reactive()}} returning the grouping variable name (\code{""} = none).}
+}
 }
 \description{
 Computes and renders descriptive statistics for numeric and categorical
