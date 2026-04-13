@@ -46,6 +46,7 @@ reference:
     contents:
       - compute_numeric_summary
       - compute_categorical_summary
+      - compute_crosstab 
 
   - title: "Shiny Modules"
     desc: "Reusable Shiny module UI and server functions."
@@ -58,6 +59,8 @@ reference:
       - summary_panel_server
       - converter_ui
       - converter_server
+      - code_generator_ui         
+      - code_generator_server
 
   - title: "Package"
     desc: "Package-level documentation."
