@@ -25,7 +25,6 @@ descriptive statistics.
 Useful links:
 \itemize{
   \item \url{https://github.com/ramsas88/QuickExplore}
-  \item \url{https://ramsas88.github.io/QuickExplore/}
   \item Report bugs at \url{https://github.com/ramsas88/QuickExplore/issues}
 }
 
