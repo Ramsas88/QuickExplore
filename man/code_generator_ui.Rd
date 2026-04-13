@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_code_generator.R
 \name{code_generator_ui}
 \alias{code_generator_ui}
-\title{Code Generator Module – UI}
+\title{Code Generator Module - UI}
 \usage{
 code_generator_ui(id)
 }
@@ -14,8 +14,8 @@ A \code{\link[shiny:reexports]{shiny::tagList()}} with the code generator UI.
 }
 \description{
 Renders a panel displaying auto-generated R code that reproduces the
-current QuickExplore session (load dataset → filter/select → summarise
-→ export).  Users can copy the code to the clipboard or download it as
+current QuickExplore session (load dataset -> filter/select -> summarise
+-> export).  Users can copy the code to the clipboard or download it as
 a \code{.R} script.
 }
 \seealso{

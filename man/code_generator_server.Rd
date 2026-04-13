@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_code_generator.R
 \name{code_generator_server}
 \alias{code_generator_server}
-\title{Code Generator Module – Server}
+\title{Code Generator Module - Server}
 \usage{
 code_generator_server(
   id,

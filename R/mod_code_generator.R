@@ -1,8 +1,8 @@
-#' Code Generator Module – UI
+#' Code Generator Module - UI
 #'
 #' Renders a panel displaying auto-generated R code that reproduces the
-#' current QuickExplore session (load dataset → filter/select → summarise
-#' → export).  Users can copy the code to the clipboard or download it as
+#' current QuickExplore session (load dataset -> filter/select -> summarise
+#' -> export).  Users can copy the code to the clipboard or download it as
 #' a `.R` script.
 #'
 #' @param id Character string. The Shiny module namespace identifier.
@@ -19,7 +19,7 @@ code_generator_ui <- function(id) {
     shiny::div(
       class = "mt-2",
 
-      # ── Toolbar ─────────────────────────────────────────────────────
+      # -- Toolbar -----------------------------------------------------
       shiny::fluidRow(
         shiny::column(7,
           shiny::h5(
@@ -49,7 +49,7 @@ code_generator_ui <- function(id) {
 
       shiny::hr(class = "my-2"),
 
-      # ── Section toggles ──────────────────────────────────────────────
+      # -- Section toggles ----------------------------------------------
       shiny::div(
         class = "d-flex flex-wrap align-items-center gap-3 mb-2 mt-1",
         shiny::tags$strong("Sections:", class = "text-muted me-1"),
@@ -70,13 +70,13 @@ code_generator_ui <- function(id) {
         )
       ),
 
-      # ── Code display ─────────────────────────────────────────────────
+      # -- Code display -------------------------------------------------
       shiny::div(
         class = "code-generator-container",
         shiny::verbatimTextOutput(ns("generated_code"))
       ),
 
-      # ── Copy toast notification ──────────────────────────────────────
+      # -- Copy toast notification --------------------------------------
       shiny::tags$div(
         id    = ns("copy_toast"),
         style = "display: none; position: fixed; bottom: 20px; right: 20px; z-index: 9999;",
@@ -86,7 +86,7 @@ code_generator_ui <- function(id) {
         )
       ),
 
-      # ── JavaScript: clipboard copy ───────────────────────────────────
+      # -- JavaScript: clipboard copy -----------------------------------
       shiny::tags$script(shiny::HTML(sprintf("
         $(document).on('click', '#%s', function() {
           var codeEl = document.getElementById('%s');
@@ -126,7 +126,7 @@ code_generator_ui <- function(id) {
 }
 
 
-#' Code Generator Module – Server
+#' Code Generator Module - Server
 #'
 #' Generates reproducible R code that mirrors the current QuickExplore session
 #' and provides clipboard-copy (via JS) and download-as-`.R` handlers.
@@ -175,7 +175,7 @@ code_generator_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
 
-    # ── Internal: build a dplyr pipe chain ─────────────────────────────
+    # -- Internal: build a dplyr pipe chain -----------------------------
     # steps: list of character vectors (each step may span multiple lines).
     # Appends " |>" after the last line of every step except the final one.
     build_pipe <- function(base, steps) {
@@ -192,7 +192,7 @@ code_generator_server <- function(
       out
     }
 
-    # ── Core code-generation function ──────────────────────────────────
+    # -- Core code-generation function ----------------------------------
     generate_r_code <- function(
       filepath,
       filter_expr_val,
@@ -211,12 +211,12 @@ code_generator_server <- function(
       # No dataset loaded yet
       if (is.null(filepath) || !nzchar(filepath)) {
         return(paste(
-          "# ─────────────────────────────────────────────────────────────",
-          "# QuickExplore – R Code Generator",
+          "# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+          "# QuickExplore \u2013 R Code Generator",
           "#",
           "# No dataset loaded.",
           "# Load a dataset in QuickExplore to generate reproducible R code.",
-          "# ─────────────────────────────────────────────────────────────",
+          "# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
           sep = "\n"
         ))
       }
@@ -226,7 +226,7 @@ code_generator_server <- function(
       lines   <- character(0)
       df_name <- "df"   # current data-frame variable name in generated code
 
-      # ── Header ──────────────────────────────────────────────────────
+      # -- Header ------------------------------------------------------
       lines <- c(lines,
         "# ============================================================",
         "# QuickExplore \u2013 Generated R Script",
@@ -236,7 +236,7 @@ code_generator_server <- function(
         ""
       )
 
-      # ── Section 1: Load libraries ─────────────────────────────────
+      # -- Section 1: Load libraries ---------------------------------
       if (inc_load) {
         pkgs <- "library(dplyr)"
         if (ext %in% c("sas7bdat", "xpt")) pkgs <- c("library(haven)",  pkgs)
@@ -256,7 +256,7 @@ code_generator_server <- function(
         )
       }
 
-      # ── Section 2: Read dataset ──────────────────────────────────
+      # -- Section 2: Read dataset ----------------------------------
       if (inc_load) {
         read_call <- switch(ext,
           "sas7bdat" = paste0('df <- haven::read_sas("', filepath, '")'),
@@ -289,7 +289,7 @@ code_generator_server <- function(
         lines <- c(lines, "")
       }
 
-      # ── Section 3: Filter / Select ────────────────────────────────
+      # -- Section 3: Filter / Select --------------------------------
       if (inc_explore) {
         has_filter <- !is.null(filter_expr_val) && nzchar(trimws(filter_expr_val))
         has_select <- !is.null(selected_vars_val) && length(selected_vars_val) > 0L
@@ -322,7 +322,7 @@ code_generator_server <- function(
         lines <- c(lines, "")
       }
 
-      # ── Section 4: Summary statistics ─────────────────────────────
+      # -- Section 4: Summary statistics -----------------------------
       if (inc_summary) {
         has_group    <- !is.null(group_var_val)    && nzchar(group_var_val)
         has_sum_vars <- !is.null(summary_vars_val) && length(summary_vars_val) > 0L
@@ -342,7 +342,7 @@ code_generator_server <- function(
           list()
         }
 
-        # ── Numeric summary ──────────────────────────────────────
+        # -- Numeric summary --------------------------------------
         summarise_body <- c(
           "  dplyr::summarise(",
           "    dplyr::across(dplyr::where(is.numeric), list(",
@@ -374,7 +374,7 @@ code_generator_server <- function(
         )
         lines <- c(lines, num_lines)
 
-        # ── Categorical frequency table ───────────────────────────
+        # -- Categorical frequency table ---------------------------
         cat_steps <- c(
           select_step,
           list(c("  dplyr::select(dplyr::where(\\(x) !is.numeric(x)))")),
@@ -395,7 +395,7 @@ code_generator_server <- function(
         lines <- c(lines, cat_lines)
       }
 
-      # ── Section 4b: Cross-tabulation ────────────────────────────
+      # -- Section 4b: Cross-tabulation ----------------------------
       if (inc_crosstab) {
         has_ct_row <- !is.null(crosstab_row_val)   && nzchar(crosstab_row_val)   &&
                        crosstab_row_val   != "(select)"
@@ -460,7 +460,7 @@ code_generator_server <- function(
         }
       }
 
-      # ── Section 5: Export ────────────────────────────────────────
+      # -- Section 5: Export ----------------------------------------
       if (inc_export && !is.null(output_format_val) && nzchar(output_format_val)) {
         outfile     <- paste0(ds_name, "_converted.", output_format_val)
         export_line <- switch(output_format_val,
@@ -502,7 +502,7 @@ code_generator_server <- function(
       paste(lines, collapse = "\n")
     }   # end generate_r_code()
 
-    # ── Reactive code string ────────────────────────────────────────────
+    # -- Reactive code string --------------------------------------------
     r_code <- shiny::reactive({
       # Safely retrieve each reactive (some may not exist until data is loaded)
       safe_get <- function(r, default = NULL) {
@@ -529,12 +529,12 @@ code_generator_server <- function(
       )
     })
 
-    # ── Render code ─────────────────────────────────────────────────────
+    # -- Render code -----------------------------------------------------
     output$generated_code <- shiny::renderText({
       r_code()
     })
 
-    # ── Download handler ────────────────────────────────────────────────
+    # -- Download handler ------------------------------------------------
     output$download_code <- shiny::downloadHandler(
       filename = function() {
         fp   <- tryCatch(selected_dataset(), error = function(e) NULL)
