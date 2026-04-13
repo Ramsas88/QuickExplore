@@ -32,8 +32,6 @@ Useful links:
 
 - <https://github.com/ramsas88/QuickExplore>
 
-- <https://ramsas88.github.io/QuickExplore/>
-
 - Report bugs at <https://github.com/ramsas88/QuickExplore/issues>
 
 ## Author
