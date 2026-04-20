@@ -20,7 +20,7 @@ Returns file-level metadata including the number of rows and columns,
 file size, and timestamps.
 }
 \examples{
-\dontrun{
+\donttest{
 df <- read_dataset("/data/demog.csv")
 meta <- get_dataset_metadata(df, "/data/demog.csv")
 meta$n_rows

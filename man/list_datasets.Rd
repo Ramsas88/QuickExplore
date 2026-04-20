@@ -18,7 +18,7 @@ Scans a directory for files with extensions \code{.sas7bdat}, \code{.xpt}, \code
 or \code{.rds} (case-insensitive) and returns a summary data frame.
 }
 \examples{
-\dontrun{
+\donttest{
 datasets <- list_datasets("/data/mylib")
 }
 

@@ -64,3 +64,4 @@ and provides clipboard-copy (via JS) and download-as-\code{.R} handlers.
 \seealso{
 \code{\link[=code_generator_ui]{code_generator_ui()}}
 }
+\keyword{internal}

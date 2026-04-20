@@ -12,7 +12,7 @@
 #'   Returns `NULL` invisibly.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Launch with default settings
 #' run_app()
 #'

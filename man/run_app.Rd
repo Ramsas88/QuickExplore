@@ -21,7 +21,7 @@ provides a SAS Studio-style interface for browsing libraries, exploring
 datasets, computing summary statistics, and converting between data formats.
 }
 \examples{
-\dontrun{
+\donttest{
 # Launch with default settings
 run_app()
 

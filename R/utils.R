@@ -14,7 +14,7 @@
 #'   formats, all-whitespace character values are coerced to `NA_character_`.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' df <- read_dataset("/data/mylib/demog.sas7bdat")
 #' df <- read_dataset("/data/exports/study.csv")
 #' }
@@ -67,7 +67,7 @@ read_dataset <- function(filepath) {
 #'   `n_rows`, `n_cols`, `file_size`, `modified`, and `created`.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' df <- read_dataset("/data/demog.csv")
 #' meta <- get_dataset_metadata(df, "/data/demog.csv")
 #' meta$n_rows
@@ -146,7 +146,7 @@ get_variable_info <- function(df) {
 #'   and `Path`.  Returns an empty data frame if no supported files are found.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' datasets <- list_datasets("/data/mylib")
 #' }
 #'

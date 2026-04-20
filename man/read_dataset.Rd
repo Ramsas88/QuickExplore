@@ -24,7 +24,7 @@ blank character value is treated as a system-missing value, not as a
 valid empty string.
 }
 \examples{
-\dontrun{
+\donttest{
 df <- read_dataset("/data/mylib/demog.sas7bdat")
 df <- read_dataset("/data/exports/study.csv")
 }
