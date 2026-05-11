@@ -164,10 +164,17 @@ converter_server <- function(id, loaded_data, selected_dataset) {
 
       switch(input$output_format,
         "csv" = {
-          con          <- textConnection("preview_text", "w")
-          utils::write.csv(df, con, row.names = FALSE)
-          close(con)
-          paste(utils::head(preview_text, 5L), collapse = "\n")
+          # BUG-11 fix: mirror what the download handler writes (delimiter
+          # and header toggles), instead of always using write.csv.
+          delim     <- if (is.null(input$csv_delim))  "," else input$csv_delim
+          col_names <- if (is.null(input$csv_header)) TRUE else isTRUE(input$csv_header)
+          preview_text <- if (delim == ",") {
+            readr::format_csv(df, col_names = col_names)
+          } else {
+            readr::format_delim(df, delim = delim, col_names = col_names)
+          }
+          paste(utils::head(strsplit(preview_text, "\n", fixed = TRUE)[[1L]], 5L),
+                collapse = "\n")
         },
         "json" = {
           substr(jsonlite::toJSON(df, pretty = input$json_pretty,
@@ -219,11 +226,42 @@ converter_server <- function(id, loaded_data, selected_dataset) {
               writeLines(json_str, file)
             },
             "xpt"  = {
-              df_xpt      <- df
-              short_names <- substr(names(df_xpt), 1L, 8L)
-              short_names <- make.unique(short_names, sep = "")
-              short_names <- substr(short_names, 1L, 8L)
+              df_xpt <- df
+              # BUG-10 fix: previous 3-step shorten (substr → make.unique →
+              # substr) stripped the dedup suffix that make.unique added,
+              # re-introducing duplicate names.  Replace with an iterative
+              # shortener that reserves space for a numeric suffix up-front.
+              shorten_8 <- function(nm) {
+                out <- substr(nm, 1L, 8L)
+                if (anyDuplicated(out) == 0L) return(out)
+                # Allocate 2 trailing digits for disambiguation -> reserve 6 chars for stem.
+                stems <- substr(nm, 1L, 6L)
+                tab   <- table(stems)
+                seqs  <- stats::ave(seq_along(stems),
+                                    stems,
+                                    FUN = function(ix) seq_along(ix))
+                out2  <- ifelse(tab[stems] > 1L,
+                                sprintf("%s%02d", stems, seqs),
+                                substr(nm, 1L, 8L))
+                # Final guard: if anything still duplicates, fall back to make.unique
+                if (anyDuplicated(out2) > 0L) {
+                  out2 <- substr(make.unique(out2, sep = ""), 1L, 8L)
+                }
+                out2
+              }
+              short_names  <- shorten_8(names(df_xpt))
               names(df_xpt) <- short_names
+
+              # If any name was changed, emit a mapping CSV alongside the XPT.
+              if (!identical(short_names, names(df))) {
+                mapping <- data.frame(original = names(df),
+                                      xpt_name = short_names,
+                                      stringsAsFactors = FALSE)
+                utils::write.csv(mapping,
+                                 sub("\\.xpt$", "_name_map.csv", file),
+                                 row.names = FALSE)
+              }
+
               ds_name <- substr(
                 tools::file_path_sans_ext(basename(selected_dataset())),
                 1L, 8L)

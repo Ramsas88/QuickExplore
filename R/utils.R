@@ -14,7 +14,7 @@
 #'   formats, all-whitespace character values are coerced to `NA_character_`.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' df <- read_dataset("/data/mylib/demog.sas7bdat")
 #' df <- read_dataset("/data/exports/study.csv")
 #' }
@@ -35,17 +35,35 @@ read_dataset <- function(filepath) {
     # SAS blank-to-NA: SAS stores missing character values as " " (one space).
     # Convert any all-whitespace character column value to NA so that
     # downstream summaries and filters behave consistently with other formats.
+    #
+    # NOTE (BUG-05 fix): preserve per-column attributes and class.  The
+    # previous as.data.frame(lapply(df, ...)) round-trip dropped haven's
+    # `label`, `format.sas`, and `haven_labelled` class, which broke the
+    # Variable Metadata table for SAS inputs.  We now modify in-place and
+    # only touch character columns.
     if (ext %in% c("sas7bdat", "xpt")) {
-      df <- as.data.frame(
-        lapply(df, function(x) {
-          if (is.character(x)) {
-            x[trimws(x) == ""] <- NA_character_
+      for (nm in names(df)) {
+        if (is.character(df[[nm]])) {
+          attrs_cls <- list(attrs = attributes(df[[nm]]),
+                            cls   = class(df[[nm]]))
+          df[[nm]][trimws(df[[nm]]) == ""] <- NA_character_
+          # Re-attach saved attributes / class (replacement assignment can drop them)
+          for (a in names(attrs_cls$attrs)) {
+            attr(df[[nm]], a) <- attrs_cls$attrs[[a]]
           }
-          x
-        }),
-        stringsAsFactors = FALSE,
-        check.names      = FALSE
-      )
+          class(df[[nm]]) <- attrs_cls$cls
+        }
+      }
+    }
+
+    # BUG-20 fix: .rds files may contain any serialised R object.  Reject
+    # anything that isn't a data.frame so the user gets a clear error
+    # instead of cryptic failures in downstream tabs.
+    if (ext == "rds" && !inherits(df, "data.frame")) {
+      stop(sprintf(
+        "RDS file does not contain a data.frame (got: %s). Only data frames are supported.",
+        paste(class(df), collapse = "/")
+      ), call. = FALSE)
     }
 
     df
@@ -67,7 +85,7 @@ read_dataset <- function(filepath) {
 #'   `n_rows`, `n_cols`, `file_size`, `modified`, and `created`.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' df <- read_dataset("/data/demog.csv")
 #' meta <- get_dataset_metadata(df, "/data/demog.csv")
 #' meta$n_rows
@@ -98,7 +116,10 @@ get_dataset_metadata <- function(df, filepath) {
 #' @param df A `data.frame` or tibble.
 #'
 #' @return A `data.frame` with columns `Variable`, `Type`, `Label`, `Format`,
-#'   `Missing_Count`, `Missing_Pct`, and `N_Unique`.
+#'   `Missing_Count`, `Missing_Pct`, and `N_Unique`.  As of 0.1.1,
+#'   `N_Unique` counts distinct **non-missing** values, consistent with
+#'   `skimr` and `DataExplorer`; the missing count is reported separately
+#'   in `Missing_Count`.
 #'
 #' @examples
 #' df <- data.frame(x = 1:5, y = letters[1:5])
@@ -127,7 +148,8 @@ get_variable_info <- function(df) {
     Missing_Count = vapply(df, function(x) sum(is.na(x)), integer(1)),
     Missing_Pct   = vapply(df, function(x)
       round(sum(is.na(x)) / length(x) * 100, 1), numeric(1)),
-    N_Unique      = vapply(df, function(x) length(unique(x)), integer(1)),
+    # BUG-08 fix: count distinct NON-MISSING values, matching skimr / DataExplorer
+    N_Unique      = vapply(df, function(x) length(unique(stats::na.omit(x))), integer(1)),
     stringsAsFactors = FALSE
   )
   rownames(var_info) <- NULL
@@ -146,7 +168,7 @@ get_variable_info <- function(df) {
 #'   and `Path`.  Returns an empty data frame if no supported files are found.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' datasets <- list_datasets("/data/mylib")
 #' }
 #'
@@ -197,8 +219,9 @@ list_datasets <- function(dirpath) {
 #'
 #' @export
 format_file_size <- function(size) {
-  if (is.na(size)) return("Unknown")
-  units <- c("B", "KB", "MB", "GB")
+  if (is.na(size))     return("Unknown")
+  if (size < 0)        return("Unknown")                # BUG-07 fix: guard against negative sizes
+  units <- c("B", "KB", "MB", "GB", "TB", "PB")         # BUG-07 fix: extend beyond GB
   i <- 1L
   while (size >= 1024 && i < length(units)) {
     size <- size / 1024
@@ -228,6 +251,12 @@ format_file_size <- function(size) {
 #'
 #' @export
 compute_numeric_summary <- function(df, vars, group_var = NULL) {
+  # BUG-09 fix: friendly error when a name in `vars` is not in df.
+  missing_vars <- setdiff(vars, names(df))
+  if (length(missing_vars) > 0L) {
+    stop("compute_numeric_summary: variable(s) not found in df: ",
+         paste(shQuote(missing_vars), collapse = ", "), call. = FALSE)
+  }
   numeric_vars <- vars[vapply(df[vars], is.numeric, logical(1))]
   if (length(numeric_vars) == 0L) return(NULL)
 
@@ -251,6 +280,14 @@ compute_numeric_summary <- function(df, vars, group_var = NULL) {
                      round(stats::sd(.data[[v]], na.rm = TRUE), 2)),
         Min      = ifelse(all(is.na(.data[[v]])), NA_real_,
                      round(min(.data[[v]], na.rm = TRUE), 2)),
+        # BUG-13 fix: include lower / upper quartiles for consistency with
+        # the Variable-Details panel and with skimr / DataExplorer.
+        Q1       = ifelse(all(is.na(.data[[v]])), NA_real_,
+                     round(stats::quantile(.data[[v]], 0.25, na.rm = TRUE,
+                                           names = FALSE), 2)),
+        Q3       = ifelse(all(is.na(.data[[v]])), NA_real_,
+                     round(stats::quantile(.data[[v]], 0.75, na.rm = TRUE,
+                                           names = FALSE), 2)),
         Max      = ifelse(all(is.na(.data[[v]])), NA_real_,
                      round(max(.data[[v]], na.rm = TRUE), 2)),
         .groups  = "drop"
@@ -282,6 +319,12 @@ compute_numeric_summary <- function(df, vars, group_var = NULL) {
 #'
 #' @export
 compute_categorical_summary <- function(df, vars, group_var = NULL) {
+  # BUG-09 fix: friendly error when a name in `vars` is not in df.
+  missing_vars <- setdiff(vars, names(df))
+  if (length(missing_vars) > 0L) {
+    stop("compute_categorical_summary: variable(s) not found in df: ",
+         paste(shQuote(missing_vars), collapse = ", "), call. = FALSE)
+  }
   cat_vars <- vars[!vapply(df[vars], is.numeric, logical(1))]
   if (length(cat_vars) == 0L) return(NULL)
 
@@ -344,6 +387,39 @@ utils::globalVariables(c("Frequency", "preview_text"))
 #'
 #' @export
 compute_crosstab <- function(df, row_var, col_var, strat_var = NULL) {
+  # BUG-15 fix: validate inputs up-front for clear, actionable errors.
+  needed  <- c(row_var, col_var,
+               if (!is.null(strat_var) && nzchar(strat_var)) strat_var)
+  missing <- setdiff(needed, names(df))
+  if (length(missing) > 0L) {
+    stop("compute_crosstab: variable(s) not found in df: ",
+         paste(shQuote(missing), collapse = ", "), call. = FALSE)
+  }
+  if (identical(row_var, col_var)) {
+    stop("compute_crosstab: row_var and col_var must be different.",
+         call. = FALSE)
+  }
+  if (!is.null(strat_var) && nzchar(strat_var) &&
+      (identical(strat_var, row_var) || identical(strat_var, col_var))) {
+    stop("compute_crosstab: strat_var must differ from row_var and col_var.",
+         call. = FALSE)
+  }
+
+  # BUG-14 fix: warn when source data carries literal "Total" or "(Missing)"
+  # values that would collide with synthetic labels.
+  combined_vals <- unique(c(as.character(df[[row_var]]),
+                            as.character(df[[col_var]])))
+  if ("Total" %in% combined_vals) {
+    warning("compute_crosstab: data contains a value literally equal to 'Total'; ",
+            "synthetic Total row/column may be indistinguishable.",
+            call. = FALSE)
+  }
+  if ("(Missing)" %in% combined_vals) {
+    warning("compute_crosstab: data contains a value literally equal to '(Missing)'; ",
+            "real values will be indistinguishable from NA-relabelled cells.",
+            call. = FALSE)
+  }
+
   # ── helper: NA → "(Missing)" for display ──────────────────────────
   to_label <- function(x) ifelse(is.na(x), "(Missing)", as.character(x))
 

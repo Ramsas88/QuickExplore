@@ -159,7 +159,6 @@ code_generator_ui <- function(id) {
 #' @seealso [code_generator_ui()]
 #'
 #' @export
-#' @keywords internal
 code_generator_server <- function(
   id,
   selected_dataset,
@@ -259,14 +258,18 @@ code_generator_server <- function(
 
       # -- Section 2: Read dataset ----------------------------------
       if (inc_load) {
+        # BUG-04 fix: normalise Windows back-slashes to forward slashes so
+        # the generated script parses on every platform.  R accepts forward
+        # slashes in paths on Windows.
+        safe_filepath <- gsub("\\\\", "/", filepath, fixed = FALSE)
         read_call <- switch(ext,
-          "sas7bdat" = paste0('df <- haven::read_sas("', filepath, '")'),
-          "xpt"      = paste0('df <- haven::read_xpt("', filepath, '")'),
+          "sas7bdat" = paste0('df <- haven::read_sas("', safe_filepath, '")'),
+          "xpt"      = paste0('df <- haven::read_xpt("', safe_filepath, '")'),
           "csv"      = paste0(
-            'df <- readr::read_csv("', filepath, '", show_col_types = FALSE)'
+            'df <- readr::read_csv("', safe_filepath, '", show_col_types = FALSE)'
           ),
-          "rds"      = paste0('df <- readRDS("', filepath, '")'),
-          paste0('df <- read.table("', filepath, '", header = TRUE)  # adjust as needed')
+          "rds"      = paste0('df <- readRDS("', safe_filepath, '")'),
+          paste0('df <- read.table("', safe_filepath, '", header = TRUE)  # adjust as needed')
         )
         lines <- c(lines,
           "# \u2500\u2500 2. Load dataset \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
@@ -308,9 +311,12 @@ code_generator_server <- function(
             ))
           }
           if (has_select) {
-            vars_str <- paste(selected_vars_val, collapse = ", ")
-            steps    <- c(steps, list(
-              paste0("  dplyr::select(", vars_str, ")")
+            # BUG-06 fix: emit dplyr::select(dplyr::all_of(c("x","y"))) so the
+            # generated code is parseable for column names that are not
+            # syntactic identifiers (spaces, hyphens, leading digits, etc.).
+            vars_q <- paste(paste0('"', selected_vars_val, '"'), collapse = ", ")
+            steps  <- c(steps, list(
+              paste0("  dplyr::select(dplyr::all_of(c(", vars_q, ")))")
             ))
           }
           explore_lines       <- build_pipe(paste0("df_explore <- df"), steps)
@@ -431,7 +437,9 @@ code_generator_server <- function(
               "  )",
               "",
               "# Wide-format contingency table per stratum (base R)",
-              paste0("strat_levels <- sort(unique(", df_name, "[[\"", strat, "\"]])"),
+              # BUG-03 fix: previous line was missing the closing paren for sort(),
+              # causing parse() to fail on the downloaded script.
+              paste0("strat_levels <- sort(unique(", df_name, "[[\"", strat, "\"]]))"),
               "lapply(strat_levels, function(lv) {",
               paste0("  sub <- ", df_name, "[", df_name, "[[\"", strat, "\"]] == lv, ]"),
               paste0("  ct  <- table(sub[[\"", rv, "\"]], sub[[\"", cv, "\"]])"),
