@@ -1,7 +1,7 @@
 Package: QuickExplore
 Type: Package
 Title: Interactive Dataset Explorer for 'R' and 'SAS' and Other Data Formats
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(
       person(given = "Ram", 
@@ -46,6 +46,7 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    withr
+    withr,
+    bit64
 Config/testthat/edition: 3
 VignetteBuilder: knitr

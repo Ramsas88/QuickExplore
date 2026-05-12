@@ -188,7 +188,14 @@ dataset_browser_server <- function(id, selected_dataset, loaded_data) {
           cl <- libraries()
           cl[[lib_name]] <- NULL
           libraries(cl)
-          if (identical(selected_library(), lib_name)) selected_library(NULL)
+          # BUG-16 fix: when removing the ACTIVE library, also reset the
+          # selected dataset and the loaded data so that the Data Viewer,
+          # Convert, and Code tabs stop showing stale content.
+          if (identical(selected_library(), lib_name)) {
+            selected_library(NULL)
+            selected_dataset(NULL)
+            loaded_data(NULL)
+          }
           shiny::showNotification(paste("Library", lib_name, "removed."),
             type = "warning")
         }
