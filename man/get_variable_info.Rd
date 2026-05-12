@@ -11,7 +11,10 @@ get_variable_info(df)
 }
 \value{
 A \code{data.frame} with columns \code{Variable}, \code{Type}, \code{Label}, \code{Format},
-\code{Missing_Count}, \code{Missing_Pct}, and \code{N_Unique}.
+\code{Missing_Count}, \code{Missing_Pct}, and \code{N_Unique}.  As of 0.1.1,
+\code{N_Unique} counts distinct \strong{non-missing} values, consistent with
+\code{skimr} and \code{DataExplorer}; the missing count is reported separately
+in \code{Missing_Count}.
 }
 \description{
 Returns a data frame describing each variable: its type, SAS label,
