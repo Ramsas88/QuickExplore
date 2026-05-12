@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">QuickExplore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,45 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="quickexplore-010">QuickExplore 0.1.0<a class="anchor" aria-label="anchor" href="#quickexplore-010"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.1" id="quickexplore-011">QuickExplore 0.1.1<a class="anchor" aria-label="anchor" href="#quickexplore-011"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-1"></a></h3>
+<ul><li>Code Generator: closed the missing parenthesis on the <code>strat_levels</code> line emitted for stratified cross-tabs. The generated <code>.R</code> script now parses cleanly (#BUG-03).</li>
+<li>Code Generator: normalise Windows back-slashes in file paths so the generated <code>.R</code> script is parseable on every platform (#BUG-04).</li>
+<li>Code Generator: emit <code>dplyr::select(dplyr::all_of(c(...)))</code> instead of bare column names, so non-syntactic names (spaces, hyphens, leading digits) survive the round-trip (#BUG-06).</li>
+<li>
+<code><a href="../reference/read_dataset.html">read_dataset()</a></code>: preserve <code>haven</code> <code>label</code> / <code>format.sas</code> attributes and the <code>haven_labelled</code> class when converting blank SAS strings to <code>NA</code> (#BUG-05). <code><a href="../reference/get_variable_info.html">get_variable_info()</a></code> once again populates <code>Label</code> and <code>Format</code> for SAS inputs.</li>
+<li>
+<code><a href="../reference/read_dataset.html">read_dataset()</a></code>: reject <code>.rds</code> files whose top-level object is not a <code>data.frame</code>, with a clear error message instead of cryptic downstream failures (#BUG-20).</li>
+<li>
+<code><a href="../reference/format_file_size.html">format_file_size()</a></code>: extended units to <code>TB</code> and <code>PB</code> and added a guard for negative sizes (#BUG-07).</li>
+<li>
+<code><a href="../reference/get_variable_info.html">get_variable_info()</a></code>: <code>N_Unique</code> now counts distinct non-missing values, matching <code>skimr</code> and <code>DataExplorer</code> (#BUG-08). Missing counts continue to be reported separately in <code>Missing_Count</code>.</li>
+<li>
+<code><a href="../reference/compute_numeric_summary.html">compute_numeric_summary()</a></code> / <code><a href="../reference/compute_categorical_summary.html">compute_categorical_summary()</a></code>: emit a clear error naming the offending variable when <code>vars</code> includes a name that is not in <code>df</code>, instead of base R’s <code>undefined columns selected</code> (#BUG-09).</li>
+<li>
+<code><a href="../reference/compute_numeric_summary.html">compute_numeric_summary()</a></code>: now returns <code>Q1</code> and <code>Q3</code> quartile columns alongside the existing summary statistics (#BUG-13).</li>
+<li>
+<code><a href="../reference/compute_crosstab.html">compute_crosstab()</a></code>: validate <code>row_var</code>, <code>col_var</code>, and <code>strat_var</code> up-front and fail with an actionable error if any is missing or duplicated (#BUG-15).</li>
+<li>
+<code><a href="../reference/compute_crosstab.html">compute_crosstab()</a></code>: warn when the source data carries values literally equal to <code>Total</code> or <code>(Missing)</code>, which would otherwise be indistinguishable from synthetic totals / NA-relabel cells (#BUG-14).</li>
+<li>Converter: the CSV preview now honours the user’s delimiter and header-row toggles, matching what the download handler writes (#BUG-11).</li>
+<li>Converter: rewrote XPT variable-name shortening so a <code>make.unique</code> step is no longer followed by truncation, avoiding duplicate 8-character names; if any name is shortened, a <code>_name_map.csv</code> is emitted alongside the <code>.xpt</code> so analysts can trace renames (#BUG-10).</li>
+<li>Dataset Browser: removing the currently active library now resets <code>selected_dataset</code> and <code>loaded_data</code> so the Data Viewer, Convert, and Code tabs stop showing stale content (#BUG-16).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-1-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-1-1"></a></h3>
+<ul><li>Removed contradictory <code>@keywords internal</code> on <code>code_generator_server</code>, which had been exported simultaneously (#BUG-17).</li>
+<li>Documented <code><a href="../reference/compute_crosstab.html">compute_crosstab()</a></code>, the Cross-tabulation panel, the Code Generator tab, and the SAS blank-to-NA coercion that were already shipped in 0.1.0 (#BUG-18).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="tests-0-1-1">Tests<a class="anchor" aria-label="anchor" href="#tests-0-1-1"></a></h3>
+<ul><li>Added <code>tests/testthat/test_quickexplore_suite.R</code>: testthat edition-3 suite with eight thematic sections (~40 test cases) covering file-format dispatch, metadata, numeric/categorical summaries, cross-tabulation, converter round-trip, code-generator parseability, and data-type coverage.</li>
+<li>Added <code>tests/testthat/test_quickexplore_runner.Rmd</code>: an R-Markdown runner that knits to an HTML report with pass/fail tallies and inline bug-regression demonstrations.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="quickexplore-010">QuickExplore 0.1.0<a class="anchor" aria-label="anchor" href="#quickexplore-010"></a></h2><p class="text-muted">CRAN release: 2026-04-21</p>
 <div class="section level3">
 <h3 id="initial-release-0-1-0">Initial Release<a class="anchor" aria-label="anchor" href="#initial-release-0-1-0"></a></h3>
 <ul><li>

@@ -13,6 +13,7 @@ scripts or other Shiny applications.
 ## Launching the Application
 
 ``` r
+
 library(QuickExplore)
 run_app()
 ```
@@ -37,6 +38,7 @@ called directly.
 ### Reading a Dataset
 
 ``` r
+
 df <- read_dataset("/path/to/data/demog.sas7bdat")
 df <- read_dataset("/path/to/data/analysis.csv")
 df <- read_dataset("/path/to/data/model_output.rds")
@@ -45,6 +47,7 @@ df <- read_dataset("/path/to/data/model_output.rds")
 ### Listing Datasets in a Directory
 
 ``` r
+
 datasets <- list_datasets("/path/to/data/")
 print(datasets)
 ```
@@ -52,6 +55,7 @@ print(datasets)
 ### Variable Metadata
 
 ``` r
+
 info <- get_variable_info(df)
 head(info)
 ```
@@ -59,6 +63,7 @@ head(info)
 ### Descriptive Statistics
 
 ``` r
+
 df <- data.frame(
   age  = c(25, 34, 45, 52, 28, NA),
   sex  = c("M", "F", "M", "F", "M", "F"),
@@ -68,9 +73,9 @@ df <- data.frame(
 # Numeric summary
 library(QuickExplore)
 compute_numeric_summary(df, c("age", "dose"))
-#>   Variable N Missing  Mean Median    SD Min Max
-#> 1      age 5       1 36.80     34 11.43  25  52
-#> 2     dose 6       0 16.67     15  8.16  10  30
+#>   Variable N Missing  Mean Median    SD Min Q1 Q3 Max
+#> 1      age 5       1 36.80     34 11.43  25 28 45  52
+#> 2     dose 6       0 16.67     15  8.16  10 10 20  30
 
 # Categorical summary
 compute_categorical_summary(df, "sex")
@@ -82,6 +87,7 @@ compute_categorical_summary(df, "sex")
 ### Grouped Summaries
 
 ``` r
+
 compute_numeric_summary(df, c("age", "dose"), group_var = "sex")
 ```
 
@@ -91,6 +97,7 @@ Each tab in the application is implemented as a reusable Shiny module.
 You can embed any of these modules in your own Shiny apps:
 
 ``` r
+
 library(shiny)
 library(QuickExplore)
 
@@ -109,18 +116,19 @@ shinyApp(ui, server)
 
 Available module pairs:
 
-| UI function                                                                                        | Server function                                                                                            | Purpose                        |
-|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------|
-| [`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md) | Library + dataset sidebar      |
-| [`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md)         | [`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md)         | Interactive table with filters |
-| [`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md)     | [`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md)     | Descriptive statistics         |
-| [`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md)             | [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md)             | Multi-format export            |
+| UI function | Server function | Purpose |
+|----|----|----|
+| [`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md) | Library + dataset sidebar |
+| [`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md) | [`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md) | Interactive table with filters |
+| [`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md) | [`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md) | Descriptive statistics |
+| [`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md) | [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md) | Multi-format export |
 
 ## Session Info
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -141,16 +149,16 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] QuickExplore_0.1.0
+#> [1] QuickExplore_0.1.1
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] vctrs_0.7.3       cli_3.6.6         knitr_1.51        rlang_1.2.0      
 #>  [5] xfun_0.57         otel_0.2.0        generics_0.1.4    textshaping_1.0.5
-#>  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       
+#>  [9] jsonlite_2.0.0    glue_1.8.1        htmltools_0.5.9   ragg_1.5.2       
 #> [13] sass_0.4.10       rmarkdown_2.31    tibble_3.3.1      evaluate_1.0.5   
 #> [17] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
-#> [21] compiler_4.5.3    dplyr_1.2.1       fs_2.0.1          pkgconfig_2.0.3  
+#> [21] compiler_4.6.0    dplyr_1.2.1       fs_2.1.0          pkgconfig_2.0.3  
 #> [25] htmlwidgets_1.6.4 systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         
 #> [29] tidyselect_1.2.1  pillar_1.11.1     magrittr_2.0.5    bslib_0.10.0     
-#> [33] tools_4.5.3       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
+#> [33] tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
 ```

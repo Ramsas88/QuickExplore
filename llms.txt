@@ -11,12 +11,17 @@ scripts or other Shiny applications.
 ## install package from GitHub
 
 ``` r
+
 pak::pak("Ramsas88/QuickExplore")
 ```
 
 ## Launching the Application
 
-`r{eval = FALSE} library(QuickExplore) run_app()`
+``` r
+
+library(QuickExplore) 
+run_app()
+```
 
 The app opens in your default browser. If you are running inside RStudio
 it opens in the Viewer pane.
@@ -38,6 +43,7 @@ called directly.
 ### Reading a Dataset
 
 ``` r
+
 df <- read_dataset("/path/to/data/demog.sas7bdat")
 df <- read_dataset("/path/to/data/analysis.csv")
 df <- read_dataset("/path/to/data/model_output.rds")
@@ -46,6 +52,7 @@ df <- read_dataset("/path/to/data/model_output.rds")
 ### Listing Datasets in a Directory
 
 ``` r
+
 datasets <- list_datasets("/path/to/data/")
 print(datasets)
 ```
@@ -53,6 +60,7 @@ print(datasets)
 ### Variable Metadata
 
 ``` r
+
 info <- get_variable_info(df)
 head(info)
 ```
@@ -60,6 +68,7 @@ head(info)
 ### Descriptive Statistics
 
 ``` r
+
 df <- data.frame(
   age  = c(25, 34, 45, 52, 28, NA),
   sex  = c("M", "F", "M", "F", "M", "F"),
@@ -77,6 +86,7 @@ compute_categorical_summary(df, "sex")
 ### Grouped Summaries
 
 ``` r
+
 compute_numeric_summary(df, c("age", "dose"), group_var = "sex")
 ```
 
@@ -86,6 +96,7 @@ Each tab in the application is implemented as a reusable Shiny module.
 You can embed any of these modules in your own Shiny apps:
 
 ``` r
+
 library(shiny)
 library(QuickExplore)
 
@@ -104,12 +115,12 @@ shinyApp(ui, server)
 
 Available module pairs:
 
-| UI function                                                                                        | Server function                                                                                            | Purpose                        |
-|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------|
-| [`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md) | Library + dataset sidebar      |
-| [`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md)         | [`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md)         | Interactive table with filters |
-| [`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md)     | [`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md)     | Descriptive statistics         |
-| [`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md)             | [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md)             | Multi-format export            |
+| UI function | Server function | Purpose |
+|----|----|----|
+| [`dataset_browser_ui()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_ui.md) | [`dataset_browser_server()`](https://ramsas88.github.io/quickexplorer/reference/dataset_browser_server.md) | Library + dataset sidebar |
+| [`data_viewer_ui()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_ui.md) | [`data_viewer_server()`](https://ramsas88.github.io/quickexplorer/reference/data_viewer_server.md) | Interactive table with filters |
+| [`summary_panel_ui()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_ui.md) | [`summary_panel_server()`](https://ramsas88.github.io/quickexplorer/reference/summary_panel_server.md) | Descriptive statistics |
+| [`converter_ui()`](https://ramsas88.github.io/quickexplorer/reference/converter_ui.md) | [`converter_server()`](https://ramsas88.github.io/quickexplorer/reference/converter_server.md) | Multi-format export |
 
 # Package index
 

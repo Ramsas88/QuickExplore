@@ -18,7 +18,10 @@ get_variable_info(df)
 ## Value
 
 A `data.frame` with columns `Variable`, `Type`, `Label`, `Format`,
-`Missing_Count`, `Missing_Pct`, and `N_Unique`.
+`Missing_Count`, `Missing_Pct`, and `N_Unique`. As of 0.1.1, `N_Unique`
+counts distinct **non-missing** values, consistent with `skimr` and
+`DataExplorer`; the missing count is reported separately in
+`Missing_Count`.
 
 ## Examples
 

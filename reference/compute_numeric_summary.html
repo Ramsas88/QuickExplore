@@ -9,7 +9,7 @@ minimum, and maximum for each numeric variable in vars."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">QuickExplore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,17 +79,17 @@ or <code>NULL</code> if there are no numeric variables in <code>vars</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, g <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">compute_numeric_summary</span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variable   N Missing Mean Median   SD   Min  Max</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        x 100       0 0.07   0.09 1.05 -2.61 2.76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        y 100       0 0.52   0.55 0.31  0.02 0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Variable   N Missing Mean Median   SD   Min    Q1   Q3  Max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        x 100       0 0.07   0.09 1.05 -2.61 -0.36 0.62 2.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        y 100       0 0.52   0.55 0.31  0.02  0.22 0.77 0.98</span>
 <span class="r-in"><span><span class="fu">compute_numeric_summary</span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, group_var <span class="op">=</span> <span class="st">"g"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   g     Variable     N Missing  Mean Median    SD   Min   Max</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> A     x           50       0  0.02   0.15  1.12 -<span style="color: #BB0000;">2.61</span>  2.07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> B     x           50       0  0.12  -<span style="color: #BB0000;">0.01</span>  0.99 -<span style="color: #BB0000;">1.91</span>  2.76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> A     y           50       0  0.5    0.53  0.29  0.04  0.98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> B     y           50       0  0.54   0.61  0.32  0.02  0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   g     Variable     N Missing  Mean Median    SD   Min    Q1    Q3   Max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> A     x           50       0  0.02   0.15  1.12 -<span style="color: #BB0000;">2.61</span> -<span style="color: #BB0000;">0.54</span>  0.72  2.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> B     x           50       0  0.12  -<span style="color: #BB0000;">0.01</span>  0.99 -<span style="color: #BB0000;">1.91</span> -<span style="color: #BB0000;">0.27</span>  0.57  2.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> A     y           50       0  0.5    0.53  0.29  0.04  0.22  0.72  0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> B     y           50       0  0.54   0.61  0.32  0.02  0.22  0.78  0.98</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -12,13 +12,13 @@ Source:
 [`DESCRIPTION`](https://github.com/ramsas88/QuickExplore/blob/main/DESCRIPTION)
 
 Gaduputi R, Katam J (2026). *QuickExplore: Interactive Dataset Explorer
-for R and SAS and Other Data Formats*. R package version 0.1.0,
+for 'R' and 'SAS' and Other Data Formats*. R package version 0.1.1,
 <https://github.com/ramsas88/QuickExplore>.
 
     @Manual{,
-      title = {QuickExplore: Interactive Dataset Explorer for R and SAS and Other Data Formats},
+      title = {QuickExplore: Interactive Dataset Explorer for 'R' and 'SAS' and Other Data Formats},
       author = {Ram Gaduputi and Jagadish Katam},
       year = {2026},
-      note = {R package version 0.1.0},
+      note = {R package version 0.1.1},
       url = {https://github.com/ramsas88/QuickExplore},
     }
